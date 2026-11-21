@@ -1,0 +1,2857 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRM393 QuizMaster - Ôn Thi Lập Trình Di Động (Kèm Giải Thích)</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(99, 102, 241, 0.3);
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(99, 102, 241, 0.6);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-violet-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 font-bold text-lg">
+          Q
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">PRM393 QuizMaster</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 uppercase tracking-wider">Có giải thích</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">116 câu hỏi chuẩn hóa • 5 đề thi FTES</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl">
+        <button onclick="switchTab('exam')" id="tab-exam" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm">
+          <span>🎯</span> Thi Thử 50 Câu
+        </button>
+        <button onclick="switchTab('flashcards')" id="tab-flashcards" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+          <span>🃏</span> Flashcards
+        </button>
+        <button onclick="switchTab('practice')" id="tab-practice" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+          <span>⚡</span> Luyện Tập Từng Câu
+        </button>
+        <button onclick="switchTab('bank')" id="tab-bank" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+          <span>📚</span> Ngân Hàng Đề
+        </button>
+      </nav>
+
+      <!-- Right controls -->
+      <div class="flex items-center gap-2">
+        <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Chuyển chế độ Sáng/Tối">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Bar -->
+    <div class="flex md:hidden border-t border-slate-200 dark:border-slate-800 px-2 py-1.5 justify-around bg-slate-50 dark:bg-slate-900">
+      <button onclick="switchTab('exam')" class="mobile-tab-btn flex flex-col items-center gap-0.5 text-xs font-semibold py-1 px-2 text-indigo-600 dark:text-indigo-400">
+        <span class="text-base">🎯</span> Thi thử
+      </button>
+      <button onclick="switchTab('flashcards')" class="mobile-tab-btn flex flex-col items-center gap-0.5 text-xs font-semibold py-1 px-2 text-slate-500 dark:text-slate-400">
+        <span class="text-base">🃏</span> Flashcard
+      </button>
+      <button onclick="switchTab('practice')" class="mobile-tab-btn flex flex-col items-center gap-0.5 text-xs font-semibold py-1 px-2 text-slate-500 dark:text-slate-400">
+        <span class="text-base">⚡</span> Luyện tập
+      </button>
+      <button onclick="switchTab('bank')" class="mobile-tab-btn flex flex-col items-center gap-0.5 text-xs font-semibold py-1 px-2 text-slate-500 dark:text-slate-400">
+        <span class="text-base">📚</span> Kho đề
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: THI THỬ 50 CÂU (MOCK EXAM)          -->
+    <!-- ========================================== -->
+    <div id="view-exam" class="tab-view block space-y-6">
+      
+      <!-- Start Exam Screen (Before starting) -->
+      <div id="exam-start-card" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-2xl mx-auto shadow-xl shadow-slate-200/50 dark:shadow-none text-center space-y-6">
+        <div class="w-20 h-20 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center text-4xl mx-auto shadow-inner">
+          🎯
+        </div>
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Chế Độ Thi Thử PRM393</h2>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+            Hệ thống sẽ lấy ngẫu nhiên <strong>50 câu hỏi</strong> từ kho 116 câu độc nhất, kèm giải thích chi tiết cho từng đáp án.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 text-left bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+          <div class="space-y-1">
+            <span class="text-xs text-slate-500 dark:text-slate-400">Số lượng câu</span>
+            <p class="text-lg font-bold text-slate-900 dark:text-white">50 câu</p>
+          </div>
+          <div class="space-y-1">
+            <span class="text-xs text-slate-500 dark:text-slate-400">Thời gian làm bài</span>
+            <p class="text-lg font-bold text-slate-900 dark:text-white">50 phút</p>
+          </div>
+          <div class="space-y-1">
+            <span class="text-xs text-slate-500 dark:text-slate-400">Điều kiện qua</span>
+            <p class="text-lg font-bold text-emerald-600 dark:text-emerald-400">≥ 25 câu (5.0)</p>
+          </div>
+        </div>
+
+        <!-- Mode Option: Instant Explanation Toggle -->
+        <div class="p-4 bg-indigo-50/70 dark:bg-indigo-950/40 rounded-2xl border border-indigo-100 dark:border-indigo-900/60 flex items-center justify-between text-left">
+          <div>
+            <span class="text-sm font-bold text-indigo-950 dark:text-indigo-200">💡 Chế độ học tập (Hiện giải thích ngay)</span>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Hiển thị đáp án đúng và giải thích chi tiết ngay sau khi bạn chọn phương án.</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer ml-4 flex-shrink-0">
+            <input type="checkbox" id="exam-instant-exp-toggle" class="sr-only peer" checked>
+            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+          </label>
+        </div>
+
+        <div class="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
+          <button onclick="startExam(50)" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+            🚀 Bắt Đầu Thi Thử 50 Câu
+          </button>
+          <button onclick="startExam(116)" class="w-full sm:w-auto px-6 py-3.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold rounded-2xl transition-all">
+            Thi Toàn Bộ 116 Câu
+          </button>
+        </div>
+      </div>
+
+      <!-- Exam In-Progress Screen -->
+      <div id="exam-active-card" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: Question & Answers (col-span-8) -->
+        <div class="lg:col-span-8 space-y-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm">
+            
+            <!-- Question Header -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div class="flex items-center gap-3">
+                <span id="exam-q-number" class="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 rounded-full">
+                  Câu 1 / 50
+                </span>
+                <span id="exam-q-category" class="text-xs text-slate-400 dark:text-slate-500">
+                  State Management
+                </span>
+              </div>
+              
+              <div class="flex items-center gap-3">
+                <button onclick="toggleExamFlag()" id="btn-exam-flag" class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-800 transition-colors">
+                  <span id="flag-icon">🚩</span> <span id="flag-text">Gắn cờ xem lại</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Question Text -->
+            <div class="py-6">
+              <h3 id="exam-q-text" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-relaxed">
+                Loading question...
+              </h3>
+            </div>
+
+            <!-- Options List -->
+            <div id="exam-options-container" class="space-y-3">
+              <!-- Dynamically rendered options -->
+            </div>
+
+            <!-- Instant Explanation Box (Visible if instant mode is on and question answered) -->
+            <div id="exam-instant-exp-box" class="hidden mt-6 p-4 sm:p-5 rounded-2xl border transition-all">
+              <!-- Dynamically populated explanation -->
+            </div>
+
+            <!-- Exam Navigation Buttons -->
+            <div class="flex items-center justify-between pt-8 border-t border-slate-100 dark:border-slate-800 mt-6">
+              <button onclick="prevExamQuestion()" id="btn-exam-prev" class="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2">
+                ← Câu Trước
+              </button>
+              
+              <div class="text-xs text-slate-400 hidden sm:block">
+                Nhấn phím 1, 2, 3, 4 để chọn đáp án A, B, C, D
+              </div>
+
+              <button onclick="nextExamQuestion()" id="btn-exam-next" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all shadow-md shadow-indigo-500/20 flex items-center gap-2">
+                Câu Sau →
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Exam Status & Question Palette (col-span-4) -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm sticky top-24 space-y-5">
+            
+            <!-- Timer Box -->
+            <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+              <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                <span class="text-xl">⏱️</span>
+                <span class="text-xs font-semibold">Thời gian còn lại</span>
+              </div>
+              <div id="exam-timer" class="font-mono text-xl font-extrabold text-indigo-600 dark:text-indigo-400">
+                50:00
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400 font-medium">
+                <span>Tiến độ hoàn thành</span>
+                <span id="exam-progress-text">0 / 50</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div id="exam-progress-bar" class="h-full bg-indigo-600 rounded-full transition-all duration-300 w-0"></div>
+              </div>
+            </div>
+
+            <!-- Live instant explanation toggle in quiz -->
+            <div class="flex items-center justify-between px-1 py-1">
+              <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">Hiện giải thích tức thì:</span>
+              <button onclick="toggleExamInstantExpLive()" id="btn-toggle-instant-exp-live" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                Đang bật 💡
+              </button>
+            </div>
+
+            <!-- Question Palette -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs font-semibold text-slate-600 dark:text-slate-400">
+                <span>Danh sách câu hỏi</span>
+                <div class="flex items-center gap-3 text-[11px]">
+                  <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-indigo-600 inline-block"></span> Đã chọn</span>
+                  <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Cờ</span>
+                  <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 inline-block"></span> Chưa</span>
+                </div>
+              </div>
+
+              <div id="exam-palette" class="grid grid-cols-5 gap-2 max-h-64 overflow-y-auto p-1 custom-scrollbar">
+                <!-- Dynamically populated buttons -->
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button onclick="confirmSubmitExam()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-2xl shadow-lg shadow-emerald-600/25 transition-all text-sm flex items-center justify-center gap-2">
+              ✓ Nộp Bài Thi
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Exam Result Screen (After Submission) -->
+      <div id="exam-result-card" class="hidden space-y-6">
+        
+        <!-- Result Summary Banner -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-sm">
+          <div class="max-w-3xl mx-auto text-center space-y-6">
+            <div id="result-status-badge" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-400">
+              🎉 XUẤT SẮC - ĐẠT YÊU CẦU
+            </div>
+            
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+              Kết Quả Bài Thi Thử
+            </h2>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+                <span class="text-xs text-slate-500 dark:text-slate-400">Điểm số</span>
+                <p id="res-score" class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">45 / 50</p>
+              </div>
+              <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+                <span class="text-xs text-slate-500 dark:text-slate-400">Tỷ lệ chính xác</span>
+                <p id="res-percentage" class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">90%</p>
+              </div>
+              <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+                <span class="text-xs text-slate-500 dark:text-slate-400">Thang điểm 10</span>
+                <p id="res-gpa" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">9.0</p>
+              </div>
+              <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+                <span class="text-xs text-slate-500 dark:text-slate-400">Thời gian hoàn thành</span>
+                <p id="res-time" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">28:40</p>
+              </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex flex-wrap justify-center gap-3 pt-4">
+              <button onclick="startExam(50)" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-500/20 text-sm">
+                🔄 Làm Đề 50 Câu Mới
+              </button>
+              <button onclick="reviewWrongAnswersOnly()" id="btn-review-wrong" class="px-6 py-3 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/40 text-rose-600 dark:text-rose-400 font-semibold rounded-2xl text-sm border border-rose-200 dark:border-rose-800">
+                ❌ Chỉ Xem Lại Câu Sai (<span id="wrong-count">0</span>)
+              </button>
+              <button onclick="switchTab('flashcards')" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold rounded-2xl text-sm">
+                🃏 Học Qua Flashcard
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter and Detailed Answers Review -->
+        <div class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Chi Tiết Từng Câu Hỏi & Giải Thích</h3>
+            <div class="flex items-center gap-2">
+              <button onclick="filterResultView('all')" id="res-filter-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white">Tất cả</button>
+              <button onclick="filterResultView('wrong')" id="res-filter-wrong" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Chỉ câu sai</button>
+              <button onclick="filterResultView('correct')" id="res-filter-correct" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Chỉ câu đúng</button>
+            </div>
+          </div>
+
+          <div id="exam-review-list" class="space-y-4">
+            <!-- Dynamically populated review questions with in-depth explanation -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: FLASHCARDS (QUIZLET STYLE)          -->
+    <!-- ========================================== -->
+    <div id="view-flashcards" class="tab-view hidden space-y-6">
+      
+      <div class="max-w-3xl mx-auto space-y-6">
+        
+        <!-- Controls bar -->
+        <div class="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-2">
+            <span id="fc-counter" class="text-sm font-bold text-slate-700 dark:text-slate-300">1 / 116</span>
+            <span class="text-xs text-slate-400">• Bấm vào thẻ để lật</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="shuffleFlashcards()" class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1.5">
+              🔀 Trộn thẻ
+            </button>
+            <button onclick="toggleStarFlashcard()" id="btn-fc-star" class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-amber-500">
+              ⭐
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Flippable Flashcard -->
+        <div class="perspective-1000 w-full min-h-[420px] cursor-pointer" onclick="flipFlashcard()">
+          <div id="flashcard-inner" class="relative w-full min-h-[420px] rounded-3xl transition-transform duration-500 transform-style-3d shadow-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+            
+            <!-- Front Face: Question -->
+            <div class="absolute inset-0 backface-hidden p-8 sm:p-10 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs text-slate-400 pb-4 border-b border-slate-100 dark:border-slate-800">
+                  <span id="fc-front-cat" class="uppercase font-bold tracking-wider text-indigo-600 dark:text-indigo-400">CHUYÊN ĐỀ</span>
+                  <span>Mặt trước (Câu hỏi)</span>
+                </div>
+                <h3 id="fc-front-question" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-6 leading-relaxed">
+                  Question text goes here...
+                </h3>
+              </div>
+
+              <!-- Answer Options Preview -->
+              <div id="fc-front-options" class="space-y-2 mt-4">
+                <!-- 4 Options -->
+              </div>
+
+              <div class="text-center text-xs text-slate-400 pt-4 flex items-center justify-center gap-1">
+                <span>🔄 Nhấp để xem đáp án đúng và giải thích</span>
+              </div>
+            </div>
+
+            <!-- Back Face: Answer + Explanation -->
+            <div class="absolute inset-0 backface-hidden rotate-y-180 p-8 sm:p-10 flex flex-col justify-between bg-gradient-to-br from-indigo-50/50 via-white to-violet-50/50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950/30 rounded-3xl overflow-y-auto custom-scrollbar">
+              <div>
+                <div class="flex items-center justify-between text-xs text-slate-400 pb-4 border-b border-slate-100 dark:border-slate-800">
+                  <span class="uppercase font-bold tracking-wider text-emerald-600 dark:text-emerald-400">ĐÁP ÁN CHÍNH XÁC</span>
+                  <span>Mặt sau (Kết quả & Giải thích)</span>
+                </div>
+                <div class="mt-4 space-y-3">
+                  <div class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-extrabold text-xl">
+                    <span id="fc-back-letter">B</span>
+                  </div>
+                  <p id="fc-back-answer-text" class="text-lg font-bold text-slate-900 dark:text-white leading-relaxed">
+                    Full answer text
+                  </p>
+                </div>
+              </div>
+
+              <div class="my-4 p-4 bg-white/90 dark:bg-slate-800/90 rounded-2xl border border-indigo-100 dark:border-slate-700/80 text-xs text-slate-700 dark:text-slate-300 space-y-1.5 leading-relaxed shadow-sm">
+                <span class="font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1">💡 Giải thích chi tiết:</span>
+                <p id="fc-back-explanation">Nội dung giải thích chi tiết...</p>
+              </div>
+
+              <div class="text-center text-xs text-slate-400 pt-2 flex items-center justify-center gap-1">
+                <span>🔄 Nhấp để lật lại câu hỏi</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Flashcard Navigation Buttons -->
+        <div class="flex items-center justify-between">
+          <button onclick="prevFlashcard()" class="px-6 py-3 rounded-2xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm transition-all flex items-center gap-2">
+            ← Thẻ Trước
+          </button>
+          
+          <div class="flex gap-2">
+            <button onclick="markFlashcardKnown(false)" class="px-4 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 font-semibold text-xs border border-rose-200 dark:border-rose-800">
+              ❌ Chưa thuộc
+            </button>
+            <button onclick="markFlashcardKnown(true)" class="px-4 py-2.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-semibold text-xs border border-emerald-200 dark:border-emerald-800">
+              ✅ Đã thuộc
+            </button>
+          </div>
+
+          <button onclick="nextFlashcard()" class="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-md shadow-indigo-500/20 transition-all flex items-center gap-2">
+            Thẻ Sau →
+          </button>
+        </div>
+
+        <p class="text-center text-xs text-slate-400">
+          Phím tắt: <strong>Space</strong> (Lật thẻ) • <strong>Mũi tên Trái / Phải</strong> (Chuyển thẻ)
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: LUYỆN TẬP TỪNG CÂU (PRACTICE)       -->
+    <!-- ========================================== -->
+    <div id="view-practice" class="tab-view hidden space-y-6">
+      <div class="max-w-3xl mx-auto space-y-6">
+        
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+            <span id="practice-counter" class="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 rounded-full">
+              Câu 1 / 116
+            </span>
+            <span id="practice-cat" class="text-xs text-slate-400">Chuyên đề</span>
+          </div>
+
+          <h3 id="practice-q-text" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-relaxed">
+            Question text
+          </h3>
+
+          <div id="practice-options" class="space-y-3">
+            <!-- 4 interactive options with immediate check -->
+          </div>
+
+          <!-- Explanation Box (revealed upon selection) -->
+          <div id="practice-feedback" class="hidden p-5 rounded-2xl border text-sm transition-all leading-relaxed">
+            <!-- Feedback msg + detailed explanation -->
+          </div>
+
+          <div class="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800">
+            <button onclick="prevPracticeQuestion()" class="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm">
+              ← Câu trước
+            </button>
+            <button onclick="nextPracticeQuestion()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-md">
+              Câu tiếp theo →
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: NGÂN HÀNG CÂU HỎI (QUESTION BANK)   -->
+    <!-- ========================================== -->
+    <div id="view-bank" class="tab-view hidden space-y-6">
+      
+      <!-- Filters and Search Bar -->
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="flex-1 relative">
+            <input type="text" id="bank-search" oninput="renderQuestionBank()" placeholder="Tìm kiếm câu hỏi, từ khóa (ví dụ: jwt, bloc, widget)..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <span class="absolute left-3.5 top-3 text-slate-400 text-sm">🔍</span>
+          </div>
+          <select id="bank-category-filter" onchange="renderQuestionBank()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 dark:text-slate-300">
+            <option value="ALL">Tất cả chuyên đề</option>
+            <option value="State Management">State Management</option>
+            <option value="Flutter UI">Flutter UI & Layout</option>
+            <option value="Dart Basics">Dart Basics & OOP</option>
+            <option value="Network & Auth">Network & Authentication</option>
+            <option value="Data & Storage">Data & Storage</option>
+            <option value="Testing">Testing</option>
+            <option value="Architecture">Architecture</option>
+            <option value="Animation">Animation</option>
+            <option value="Build & Tooling">Build & Tooling</option>
+          </select>
+        </div>
+        <div class="text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
+          <span>Hiển thị: <strong id="bank-match-count">116</strong> / 116 câu hỏi</span>
+          <button onclick="toggleAllAnswers()" id="btn-toggle-answers" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+            Hiện/Ẩn tất cả đáp án & giải thích
+          </button>
+        </div>
+      </div>
+
+      <!-- Question List -->
+      <div id="bank-questions-list" class="space-y-4">
+        <!-- Dynamically rendered -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+    <p>PRM393 — Lập trình di động | Dữ liệu trích xuất từ 5 bộ đề FTES (FrosTES) | 116 câu hỏi kèm giải thích</p>
+  </footer>
+
+  <!-- Confirmation Modal for Exam Submission -->
+  <div id="confirm-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 text-center">
+      <div class="w-16 h-16 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-3xl mx-auto">
+        ⚠️
+      </div>
+      <div>
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white">Xác nhận nộp bài thi?</h3>
+        <p id="confirm-unanswered-warning" class="text-sm text-slate-600 dark:text-slate-400 mt-2">
+          Bạn vẫn còn câu hỏi chưa trả lời. Bạn có chắc chắn muốn nộp bài ngay bây giờ?
+        </p>
+      </div>
+      <div class="flex gap-3">
+        <button onclick="closeConfirmModal()" class="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800">
+          Làm tiếp
+        </button>
+        <button onclick="submitExamFinal()" class="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/25">
+          Nộp bài luôn
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Raw questions data embedded directly -->
+  <script>
+    const QUESTIONS_DATA = [
+    {
+        "id":  1,
+        "question":  "What is the purpose of JWT?",
+        "options":  [
+                        "A. Encrypt UI",
+                        "B. Represent user session",
+                        "C. Store images",
+                        "D. Manage navigation"
+                    ],
+        "answer":  "B",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "JWT (JSON Web Token) là cơ chế mã hóa stateless dùng để đại diện và duy trì phiên làm việc của người dùng (user session). Khi đăng nhập thành công, server trả về JWT để client gửi kèm trong mỗi request xác thực tiếp theo."
+    },
+    {
+        "id":  2,
+        "question":  "What type of data is SharedPreferences best suited for?",
+        "options":  [
+                        "A. Large datasets",
+                        "B. Simple primitive values",
+                        "C. Images",
+                        "D. Complex objects"
+                    ],
+        "answer":  "B",
+        "category":  "Data \u0026 Storage",
+        "explanation":  "SharedPreferences dùng để lưu trữ các cặp key-value dữ liệu nguyên thủy (primitive values như int, double, bool, String). Không phù hợp cho tập dữ liệu lớn hay quan hệ phức tạp (vốn cần dùng SQLite/Drift)."
+    },
+    {
+        "id":  3,
+        "question":  "Which concept helps test business logic easily?",
+        "options":  [
+                        "A. UI testing",
+                        "B. Separation of logic",
+                        "C. Hot reload",
+                        "D. Layouts"
+                    ],
+        "answer":  "B",
+        "category":  "Testing",
+        "explanation":  "Tách biệt logic nghiệp vụ khỏi UI (Separation of logic) giúp viết Unit Test cho logic dễ dàng, độc lập mà không cần phải mount widget tree hay giả lập giao diện người dùng."
+    },
+    {
+        "id":  4,
+        "question":  "Which pattern separates storage logic from UI?",
+        "options":  [
+                        "A. MVC",
+                        "B. Repository pattern",
+                        "C. Singleton",
+                        "D. Factory"
+                    ],
+        "answer":  "B",
+        "category":  "Data \u0026 Storage",
+        "explanation":  "Repository Pattern đóng vai trò làm trung gian phân tách logic lưu trữ/truy xuất dữ liệu (Storage/API) khỏi tầng UI/BLoC, giúp UI không cần biết dữ liệu đến từ đâu (Local DB hay Remote API)."
+    },
+    {
+        "id":  5,
+        "question":  "What is the purpose of building a release version of a Flutter app?",
+        "options":  [
+                        "A. Debug code",
+                        "B. Prepare app for distribution",
+                        "C. Test UI",
+                        "D. Change theme"
+                    ],
+        "answer":  "B",
+        "category":  "Build \u0026 Tooling",
+        "explanation":  "Bản build Release biên dịch code sang dạng mã máy tối ưu (AOT compilation, tree-shaking, loại bỏ debug banner và code kiểm thử) nhằm chuẩn bị phân phối ứng dụng cho người dùng cuối trên App Store / CH Play."
+    },
+    {
+        "id":  6,
+        "question":  "Why is logout functionality important?",
+        "options":  [
+                        "A. Free memory",
+                        "B. End user session securely",
+                        "C. Improve UI",
+                        "D. Change theme"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Chức năng đăng xuất (logout) rất quan trọng để kết thúc an toàn phiên làm việc của người dùng (End user session securely), xóa sạch access token/JWT khỏi bộ nhớ thiết bị để ngăn truy cập trái phép."
+    },
+    {
+        "id":  7,
+        "question":  "Which widget is an example of implicit animation?",
+        "options":  [
+                        "A. AnimatedContainer",
+                        "B. AnimationController",
+                        "C. Tween",
+                        "D. Ticker"
+                    ],
+        "answer":  "A",
+        "category":  "Flutter UI",
+        "explanation":  "AnimatedContainer là widget hoạt ảnh ngầm định (Implicit Animation). Bạn chỉ cần thay đổi các thuộc tính như width, height, color thì Flutter sẽ tự động animate mượt mà giữa giá trị cũ và mới mà không cần AnimationController."
+    },
+    {
+        "id":  8,
+        "question":  "Which scenario best fits local state management?",
+        "options":  [
+                        "A. User authentication",
+                        "B. Theme selection",
+                        "C. TextField input",
+                        "D. API token storage"
+                    ],
+        "answer":  "C",
+        "category":  "State Management",
+        "explanation":  "Nội dung người dùng đang gõ vào TextField (TextField input) chỉ có phạm vi cục bộ trên màn hình/widget đó, do đó quản lý bằng Local State (setState/TextEditingController) là phù hợp và tối ưu nhất."
+    },
+    {
+        "id":  9,
+        "question":  "Which programming language is used to develop Flutter applications?",
+        "options":  [
+                        "A. Kotlin",
+                        "B. Swift",
+                        "C. Dart",
+                        "D. JavaScript"
+                    ],
+        "answer":  "C",
+        "category":  "General",
+        "explanation":  "Dart là ngôn ngữ lập trình hướng đối tượng do Google phát triển, được sử dụng làm ngôn ngữ chính để phát triển toàn bộ ứng dụng và framework Flutter."
+    },
+    {
+        "id":  10,
+        "question":  "Why is the widget tree considered immutable?",
+        "options":  [
+                        "A. Widgets cannot be removed",
+                        "B. Widgets are recreated instead of modified",
+                        "C. Widgets are stored permanently",
+                        "D. Widgets cannot contain data"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Trong Flutter, Widget Tree là bất biến (immutable). Khi trạng thái thay đổi, widget cũ không bị sửa mà sẽ được tạo lại (recreated). Flutter sau đó sẽ so sánh với Element Tree để chỉ cập nhật những phần cần thiết trên màn hình."
+    },
+    {
+        "id":  11,
+        "question":  "Which widget is suitable for displaying items in a grid layout?",
+        "options":  [
+                        "A. ListView",
+                        "B. Column",
+                        "C. GridView",
+                        "D. Stack"
+                    ],
+        "answer":  "C",
+        "category":  "Flutter UI",
+        "explanation":  "GridView là widget chuyên dụng để hiển thị danh sách các phần tử theo dạng lưới 2 chiều (hàng và cột)."
+    },
+    {
+        "id":  12,
+        "question":  "What causes unnecessary widget rebuilds?",
+        "options":  [
+                        "A. State changes",
+                        "B. Overusing setState()",
+                        "C. Using Provider",
+                        "D. Using const widgets"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Lạm dụng setState() ở các widget cha cấp cao sẽ khiến toàn bộ cây widget con bên dưới bị rebuild lại không cần thiết, làm giảm hiệu năng khung hình (FPS) của ứng dụng."
+    },
+    {
+        "id":  13,
+        "question":  "Which feature of Dart helps prevent null reference errors at compile time?",
+        "options":  [
+                        "A. Dynamic typing",
+                        "B. Hot reload",
+                        "C. Null safety",
+                        "D. Asynchronous execution"
+                    ],
+        "answer":  "C",
+        "category":  "Dart Basics",
+        "explanation":  "Null Safety trong Dart giúp phát hiện và ngăn chặn các lỗi truy cập null (Null pointer exceptions) ngay tại thời điểm biên dịch (Compile time) thay vì xảy ra crash lúc chạy ứng dụng (Runtime)."
+    },
+    {
+        "id":  14,
+        "question":  "When should you prefer Provider over setState()?",
+        "options":  [
+                        "A. For simple UI updates",
+                        "B. For global or shared state",
+                        "C. For animations",
+                        "D. For navigation"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "Nên dùng Provider (hoặc BLoC/Riverpod) khi cần quản lý và chia sẻ trạng thái dùng chung (global / shared state) giữa nhiều widget hoặc nhiều màn hình khác nhau."
+    },
+    {
+        "id":  15,
+        "question":  "Which practice reduces technical debt?",
+        "options":  [
+                        "A. Quick fixes",
+                        "B. Consistent refactoring",
+                        "C. Ignoring tests",
+                        "D. Skipping reviews"
+                    ],
+        "answer":  "B",
+        "category":  "Architecture",
+        "explanation":  "Tái cấu trúc mã nguồn liên tục và nhất quán (Consistent refactoring) giúp mã sạch, dễ bảo trì, loại bỏ code thừa và giảm thiểu nợ kỹ thuật (Technical debt) trong dự án dài hạn."
+    },
+    {
+        "id":  16,
+        "question":  "What is authentication primarily used for?",
+        "options":  [
+                        "A. Data storage",
+                        "B. User identity verification",
+                        "C. UI rendering",
+                        "D. Navigation"
+                    ],
+        "answer":  "B",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Xác thực (Authentication) chủ yếu dùng để kiểm tra và xác minh danh tính người dùng (User identity verification), đảm bảo người dùng đúng là chủ sở hữu tài khoản."
+    },
+    {
+        "id":  17,
+        "question":  "Why are different build flavors useful?",
+        "options":  [
+                        "A. UI themes",
+                        "B. Multiple app configurations",
+                        "C. Faster rendering",
+                        "D. Simpler navigation"
+                    ],
+        "answer":  "B",
+        "category":  "Build \u0026 Tooling",
+        "explanation":  "Build Flavors (trên Android/iOS) cho phép tạo nhiều cấu hình ứng dụng khác nhau từ cùng một codebase (ví dụ: môi trường Dev, Staging, Production với API URL và icon khác nhau)."
+    },
+    {
+        "id":  18,
+        "question":  "What advantage does a single codebase provide in Flutter development?",
+        "options":  [
+                        "A. Higher memory usage",
+                        "B. Simpler UI customization",
+                        "C. Reduced development and maintenance effort",
+                        "D. Automatic database synchronization"
+                    ],
+        "answer":  "C",
+        "category":  "General",
+        "explanation":  "Một trong những ưu điểm lớn nhất của Flutter là Single Codebase: viết code 1 lần nhưng biên dịch và chạy trên nhiều nền tảng, giúp giảm thiểu đáng kể chi phí phát triển và bảo trì."
+    },
+    {
+        "id":  19,
+        "question":  "What is the primary role of widgets in Flutter?",
+        "options":  [
+                        "A. Managing databases",
+                        "B. Describing the user interface",
+                        "C. Handling network requests",
+                        "D. Compiling Dart code"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Trong Flutter, \u0027Everything is a widget\u0027. Widget là các khối cấu trúc cơ bản dùng để mô tả giao diện người dùng (Describing the user interface) tại từng thời điểm."
+    },
+    {
+        "id":  20,
+        "question":  "Why is user feedback valuable?",
+        "options":  [
+                        "A. Delay project",
+                        "B. Improve product usability",
+                        "C. Change architecture",
+                        "D. Reduce scope"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Phản hồi của người dùng (User feedback) giúp nhà phát triển nhận diện các điểm bất tiện, tối ưu trải nghiệm người dùng và cải thiện tính dễ sử dụng (Product usability) của ứng dụng."
+    },
+    {
+        "id":  21,
+        "question":  "What problem does state hoisting address?",
+        "options":  [
+                        "A. API delay",
+                        "B. State duplication",
+                        "C. Theme conflict",
+                        "D. Navigation error"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "State Hoisting (nâng trạng thái lên widget cha) giúp tránh việc sao chép/đồng bộ dữ liệu phân tán (State duplication), biến widget con thành stateless dễ tái sử dụng."
+    },
+    {
+        "id":  22,
+        "question":  "What happens when setState() is called in a StatefulWidget?",
+        "options":  [
+                        "A. The app restarts",
+                        "B. The widget tree is rebuilt",
+                        "C. Data is saved permanently",
+                        "D. Navigation occurs"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "Khi gọi setState(), Flutter sẽ đánh dấu State object đó là \u0027dirty\u0027 và lên lịch chạy lại phương thức build(), dẫn đến Widget Tree tương ứng được xây dựng lại (rebuilt)."
+    },
+    {
+        "id":  23,
+        "question":  "Which pattern is commonly used for scalable state management?",
+        "options":  [
+                        "A. MVC",
+                        "B. BLoC",
+                        "C. Singleton",
+                        "D. Factory"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "BLoC (Business Logic Component) là kiến trúc quản lý trạng thái có khả năng mở rộng cao (Scalable), sử dụng Streams để tách biệt hoàn toàn Business Logic ra khỏi giao diện UI."
+    },
+    {
+        "id":  24,
+        "question":  "Which input type improves user experience for emails?",
+        "options":  [
+                        "A. TextInputType.number",
+                        "B. TextInputType.emailAddress",
+                        "C. TextInputType.text",
+                        "D. TextInputType.url"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Thuộc tính TextInputType.emailAddress sẽ tự động hiển thị bàn phím ảo có sẵn phím \u0027@\u0027 và tên miền, giúp trải nghiệm nhập email của người dùng thuận tiện và ít sai sót hơn."
+    },
+    {
+        "id":  25,
+        "question":  "Which sliver is commonly used to display a scrolling list?",
+        "options":  [
+                        "A. SliverGrid",
+                        "B. SliverList",
+                        "C. SliverAppBar",
+                        "D. SliverFillRemaining"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "SliverList là một thành phần sliver bên trong CustomScrollView chuyên dùng để hiển thị danh sách cuộn mượt mà cùng với các sliver khác như SliverAppBar."
+    },
+    {
+        "id":  26,
+        "question":  "Which method validates all form fields?",
+        "options":  [
+                        "A. validate()",
+                        "B. check()",
+                        "C. verify()",
+                        "D. submit()"
+                    ],
+        "answer":  "A",
+        "category":  "General",
+        "explanation":  "Phương thức FormState.validate() duyệt qua tất cả các FormField con và gọi hàm validator() của từng trường để kiểm tra tính hợp lệ của toàn bộ biểu mẫu."
+    },
+    {
+        "id":  27,
+        "question":  "Which HTTP method is used to send new data to a server?",
+        "options":  [
+                        "A. GET",
+                        "B. DELETE",
+                        "C. POST",
+                        "D. HEAD"
+                    ],
+        "answer":  "C",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Phương thức HTTP POST được quy định dùng để gửi dữ liệu mới lên máy chủ (thường là tạo mới bản ghi trong RESTful API)."
+    },
+    {
+        "id":  28,
+        "question":  "What is the main goal of performance optimization in Flutter apps?",
+        "options":  [
+                        "A. Improve UI colors",
+                        "B. Ensure smooth and responsive UI",
+                        "C. Reduce code size",
+                        "D. Add features"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Mục tiêu chính của tối ưu hiệu năng trong Flutter là đảm bảo giao diện luôn mượt mà (đạt 60fps hoặc 120fps) và phản hồi tức thì với các thao tác vuốt chạm của người dùng."
+    },
+    {
+        "id":  29,
+        "question":  "What is dependency injection used for?",
+        "options":  [
+                        "A. UI updates",
+                        "B. Manage object dependencies",
+                        "C. Theme control",
+                        "D. Navigation"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Dependency Injection (DI) là kỹ thuật cung cấp các đối tượng phụ thuộc từ bên ngoài vào thay vì khởi tạo cứng bên trong class, giúp quản lý phụ thuộc linh hoạt và dễ mock khi viết test."
+    },
+    {
+        "id":  30,
+        "question":  "Which layer should handle authentication logic?",
+        "options":  [
+                        "A. UI layer",
+                        "B. Data layer",
+                        "C. Service layer",
+                        "D. Theme layer"
+                    ],
+        "answer":  "C",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Logic xác thực người dùng (gọi API login, lưu token, kiểm tra quyền) thuộc về tầng dịch vụ (Service layer / AuthenticationService), không nên viết trực tiếp trong tầng UI."
+    },
+    {
+        "id":  31,
+        "question":  "What does the final keyword indicate in Dart?",
+        "options":  [
+                        "A. The variable can be reassigned later",
+                        "B. The variable value is fixed after assignment",
+                        "C. The variable is global",
+                        "D. The variable is private"
+                    ],
+        "answer":  "B",
+        "category":  "Dart Basics",
+        "explanation":  "Từ khóa \u0027final\u0027 trong Dart quy định rằng biến chỉ có thể được gán giá trị một lần duy nhất, sau khi đã gán thì không thể thay đổi giá trị được nữa."
+    },
+    {
+        "id":  32,
+        "question":  "Which status code indicates resource not found?",
+        "options":  [
+                        "A. 200",
+                        "B. 301",
+                        "C. 404",
+                        "D. 500"
+                    ],
+        "answer":  "C",
+        "category":  "General",
+        "explanation":  "Mã trạng thái HTTP 404 (Not Found) biểu thị rằng tài nguyên được yêu cầu không tồn tại trên máy chủ."
+    },
+    {
+        "id":  33,
+        "question":  "What represents the output of a BLoC?",
+        "options":  [
+                        "A. Events",
+                        "B. Widgets",
+                        "C. States",
+                        "D. Controllers"
+                    ],
+        "answer":  "C",
+        "category":  "State Management",
+        "explanation":  "Trong kiến trúc BLoC, đầu vào là các Sự kiện (Events) và đầu ra từ BLoC phát ra là các Trạng thái (States) thông qua Stream."
+    },
+    {
+        "id":  34,
+        "question":  "Which widget arranges its children horizontally?",
+        "options":  [
+                        "A. Column",
+                        "B. Stack",
+                        "C. Row",
+                        "D. Align"
+                    ],
+        "answer":  "C",
+        "category":  "Flutter UI",
+        "explanation":  "Widget Row sắp xếp các widget con của nó theo chiều ngang (horizontal), trong khi Column sắp xếp theo chiều dọc (vertical)."
+    },
+    {
+        "id":  35,
+        "question":  "What is the role of vsync?",
+        "options":  [
+                        "A. Sync data",
+                        "B. Optimize animation resources",
+                        "C. Control layout",
+                        "D. Handle navigation"
+                    ],
+        "answer":  "B",
+        "category":  "Animation",
+        "explanation":  "vsync (TickerProvider) đồng bộ hóa vòng lặp hoạt ảnh với tốc độ làm tươi màn hình của thiết bị, giúp tối ưu hóa tài nguyên và ngăn hoạt ảnh chạy lãng phí khi màn hình bị ẩn."
+    },
+    {
+        "id":  36,
+        "question":  "Which test runs fastest?",
+        "options":  [
+                        "A. Integration test",
+                        "B. Widget test",
+                        "C. Unit test",
+                        "D. Manual test"
+                    ],
+        "answer":  "C",
+        "category":  "Testing",
+        "explanation":  "Unit test kiểm tra các hàm/class logic độc lập không cần render UI, do đó tốc độ thực thi của nó là nhanh nhất (thường tính bằng mili-giây)."
+    },
+    {
+        "id":  37,
+        "question":  "Why is understanding the widget lifecycle important?",
+        "options":  [
+                        "A. Improve API performance",
+                        "B. Manage UI updates correctly",
+                        "C. Deploy apps faster",
+                        "D. Reduce file size"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Hiểu rõ vòng đời widget (initState, didUpdateWidget, dispose...) giúp nhà phát triển khởi tạo tài nguyên, lắng nghe luồng dữ liệu và giải phóng bộ nhớ đúng cách."
+    },
+    {
+        "id":  38,
+        "question":  "Why are real-world requirements important?",
+        "options":  [
+                        "A. Increase complexity",
+                        "B. Reflect actual user needs",
+                        "C. Change theme",
+                        "D. Slow development"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Yêu cầu thực tế (Real-world requirements) phản ánh đúng nhu cầu và hành vi của người dùng thật, giúp sản phẩm xây dựng ra giải quyết đúng vấn đề và có giá trị sử dụng cao."
+    },
+    {
+        "id":  39,
+        "question":  "Which protocol is commonly used for secure authentication?",
+        "options":  [
+                        "A. HTTP",
+                        "B. FTP",
+                        "C. OAuth 2.0",
+                        "D. SMTP"
+                    ],
+        "answer":  "C",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "OAuth 2.0 là giao thức chuẩn công nghiệp được sử dụng phổ biến nhất hiện nay cho việc ủy quyền và xác thực an toàn (ví dụ: Đăng nhập bằng Google, Facebook, GitHub)."
+    },
+    {
+        "id":  40,
+        "question":  "What design principle improves form usability?",
+        "options":  [
+                        "A. Long forms",
+                        "B. Minimal validation",
+                        "C. Clear labels and feedback",
+                        "D. Hidden errors"
+                    ],
+        "answer":  "C",
+        "category":  "General",
+        "explanation":  "Thiết kế biểu mẫu tốt cần có nhãn rõ ràng (Clear labels) và thông báo phản hồi lỗi tức thì (Feedback) khi người dùng nhập sai để nâng cao tính khả dụng (Usability)."
+    },
+    {
+        "id":  41,
+        "question":  "Which database is commonly used for structured local data?",
+        "options":  [
+                        "A. Firebase",
+                        "B. SQLite",
+                        "C. MongoDB",
+                        "D. MySQL"
+                    ],
+        "answer":  "B",
+        "category":  "Data \u0026 Storage",
+        "explanation":  "SQLite là cơ sở dữ liệu quan hệ (Relational DB) nhúng cục bộ được sử dụng phổ biến nhất trên thiết bị di động để lưu trữ dữ liệu có cấu trúc dạng bảng."
+    },
+    {
+        "id":  42,
+        "question":  "Why is Chapter 5 often considered optional or plus content?",
+        "options":  [
+                        "A. It replaces layout widgets",
+                        "B. Themes are not required for functionality",
+                        "C. It manages navigation",
+                        "D. It handles state"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Theme (chủ đề màu sắc/giao diện) giúp ứng dụng đẹp hơn nhưng không ảnh hưởng tới logic vận hành cốt lõi của tính năng, vì vậy thường được xếp vào nội dung bổ trợ (plus content)."
+    },
+    {
+        "id":  43,
+        "question":  "What format is most commonly used in REST APIs?",
+        "options":  [
+                        "A. XML",
+                        "B. CSV",
+                        "C. JSON",
+                        "D. Binary"
+                    ],
+        "answer":  "C",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "JSON (JavaScript Object Notation) là định dạng trao đổi dữ liệu nhẹ, dạng text, dễ đọc hiểu và được sử dụng rộng rãi nhất trong các dịch vụ RESTful API."
+    },
+    {
+        "id":  44,
+        "question":  "Why is passing context important in navigation?",
+        "options":  [
+                        "A. Access theme",
+                        "B. Access Navigator",
+                        "C. Access state",
+                        "D. Access layout"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "BuildContext cho biết vị trí của widget trong widget tree, điều này bắt buộc để Navigator tìm thấy NavigatorState cấp gần nhất nhằm thực hiện chuyển trang."
+    },
+    {
+        "id":  45,
+        "question":  "Which component is responsible for rendering UI in Flutter?",
+        "options":  [
+                        "A. Native UI components",
+                        "B. The Flutter engine",
+                        "C. The operating system",
+                        "D. The backend server"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Flutter Engine (viết bằng C++) chịu trách nhiệm rasterize các lệnh đồ họa (sử dụng Skia/Impeller) và render trực tiếp các điểm ảnh lên màn hình thiết bị."
+    },
+    {
+        "id":  46,
+        "question":  "Which Dart feature allows defining reusable, type-safe components?",
+        "options":  [
+                        "A. Mixins",
+                        "B. Generics",
+                        "C. Futures",
+                        "D. Streams"
+                    ],
+        "answer":  "B",
+        "category":  "Dart Basics",
+        "explanation":  "Generics trong Dart (ví dụ: List\u003cT\u003e, Stream\u003cT\u003e) cho phép định nghĩa các component có thể tái sử dụng cho nhiều kiểu dữ liệu khác nhau mà vẫn đảm bảo Type-safe tại thời điểm biên dịch."
+    },
+    {
+        "id":  47,
+        "question":  "Which Flutter service simplifies authentication implementation?",
+        "options":  [
+                        "A. sqflite",
+                        "B. Firebase Authentication",
+                        "C. Provider",
+                        "D. http"
+                    ],
+        "answer":  "B",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Firebase Authentication cung cấp sẵn SDK toàn diện hỗ trợ xác thực qua Email/Password, Google, Apple, Phone... giúp đơn giản hóa việc triển khai đăng nhập an toàn."
+    },
+    {
+        "id":  48,
+        "question":  "Which widget rebuilds automatically during animation?",
+        "options":  [
+                        "A. AnimatedBuilder",
+                        "B. FutureBuilder",
+                        "C. StreamBuilder",
+                        "D. LayoutBuilder"
+                    ],
+        "answer":  "A",
+        "category":  "Flutter UI",
+        "explanation":  "AnimatedBuilder lắng nghe sự thay đổi từ Listenable (như AnimationController) và tự động gọi lại hàm builder() để vẽ lại widget khi hoạt ảnh chạy."
+    },
+    {
+        "id":  49,
+        "question":  "What does the Padding widget do?",
+        "options":  [
+                        "A. Adds space inside a widget",
+                        "B. Adds space between widgets",
+                        "C. Aligns widgets",
+                        "D. Controls widget size"
+                    ],
+        "answer":  "A",
+        "category":  "Flutter UI",
+        "explanation":  "Widget Padding dùng để tạo khoảng đệm (trống) bên trong viền của widget đối với nội dung con của nó."
+    },
+    {
+        "id":  50,
+        "question":  "What is the purpose of the Flutter SDK?",
+        "options":  [
+                        "A. To store application data permanently",
+                        "B. To provide tools and libraries for Flutter development",
+                        "C. To deploy applications directly to app stores",
+                        "D. To replace the operating system of a device"
+                    ],
+        "answer":  "B",
+        "category":  "Build \u0026 Tooling",
+        "explanation":  "Flutter SDK cung cấp đầy đủ công cụ CLI (flutter build, flutter run), engine, compiler và các thư viện widget phong phú phục vụ toàn diện việc phát triển ứng dụng."
+    },
+    {
+        "id":  51,
+        "question":  "Which Flutter widget reacts to authentication state changes?",
+        "options":  [
+                        "A. FutureBuilder",
+                        "B. StreamBuilder",
+                        "C. ListView",
+                        "D. Form"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "StreamBuilder lắng nghe luồng Stream dữ liệu trạng thái (ví dụ FirebaseAuth.instance.authStateChanges()) và tự động rebuild UI tương ứng khi người dùng login hoặc logout."
+    },
+    {
+        "id":  52,
+        "question":  "Why is separating UI and state logic recommended?",
+        "options":  [
+                        "A. Reduce code size",
+                        "B. Improve maintainability",
+                        "C. Faster execution",
+                        "D. Better animations"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "Tách biệt UI và logic trạng thái giúp code sạch, dễ đọc, dễ bảo trì (Improve maintainability) và cho phép các lập trình viên làm việc song song hiệu quả."
+    },
+    {
+        "id":  53,
+        "question":  "What does crossAxisAlignment control?",
+        "options":  [
+                        "A. Vertical alignment in Column",
+                        "B. Horizontal alignment in Column",
+                        "C. Child order",
+                        "D. Widget size"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Trong Column, crossAxisAlignment điều khiển việc căn chỉnh các phần tử con theo trục phụ (trục ngang - horizontal alignment)."
+    },
+    {
+        "id":  54,
+        "question":  "What happens after successful login?",
+        "options":  [
+                        "A. App closes",
+                        "B. User session starts",
+                        "C. Theme changes",
+                        "D. Navigation resets"
+                    ],
+        "answer":  "B",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Sau khi đăng nhập thành công, phiên làm việc của người dùng chính thức bắt đầu (User session starts), ứng dụng sẽ lưu token và điều hướng vào trang chính (Home)."
+    },
+    {
+        "id":  55,
+        "question":  "What is Dart primarily designed for in the Flutter ecosystem?",
+        "options":  [
+                        "A. Database management",
+                        "B. User interface development",
+                        "C. General-purpose programming with UI focus",
+                        "D. Network security"
+                    ],
+        "answer":  "C",
+        "category":  "Dart Basics",
+        "explanation":  "Dart được Google thiết kế tối ưu hóa đặc biệt cho việc phát triển giao diện người dùng (UI development), hỗ trợ cả JIT (cho Hot Reload) và AOT (cho bản Release nhanh)."
+    },
+    {
+        "id":  56,
+        "question":  "What does the build() method return in a widget?",
+        "options":  [
+                        "A. A screen",
+                        "B. A widget tree describing the UI",
+                        "C. Application state",
+                        "D. Rendered pixels"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Phương thức build() trả về một Widget Tree (cây widget) mô tả cách giao diện người dùng được hiển thị dựa trên trạng thái hiện tại."
+    },
+    {
+        "id":  57,
+        "question":  "What is the main goal of testing in Flutter apps?",
+        "options":  [
+                        "A. Improve UI design",
+                        "B. Ensure app quality and correctness",
+                        "C. Speed up builds",
+                        "D. Manage state"
+                    ],
+        "answer":  "B",
+        "category":  "Testing",
+        "explanation":  "Mục tiêu cốt lõi của việc viết test trong Flutter là đảm bảo chất lượng, tính đúng đắn của logic (Ensure app quality and correctness) và ngăn chặn lỗi hồi quy (regression)."
+    },
+    {
+        "id":  58,
+        "question":  "Which Dart feature supports object-oriented programming?",
+        "options":  [
+                        "A. Widgets",
+                        "B. Classes and objects",
+                        "C. Hot reload",
+                        "D. Layout builders"
+                    ],
+        "answer":  "B",
+        "category":  "Dart Basics",
+        "explanation":  "Dart là ngôn ngữ thuần hướng đối tượng (Pure OOP), hỗ trợ đầy đủ các khái niệm Lớp và Đối tượng (Classes and Objects), Kế thừa, Đa hình và Đóng gói."
+    },
+    {
+        "id":  59,
+        "question":  "When is it most appropriate to customize themes in a Flutter app?",
+        "options":  [
+                        "A. After API integration",
+                        "B. During UI/UX design phase",
+                        "C. Only at deployment",
+                        "D. Only for testing"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Tùy biến Theme (ThemeData, ColorScheme) nên được thực hiện trong giai đoạn thiết kế UI/UX để đảm bảo tính nhất quán về màu sắc, font chữ trên toàn bộ ứng dụng."
+    },
+    {
+        "id":  60,
+        "question":  "Why should architecture be decided early?",
+        "options":  [
+                        "A. Avoid UI work",
+                        "B. Reduce refactoring cost",
+                        "C. Improve animations",
+                        "D. Change theme"
+                    ],
+        "answer":  "B",
+        "category":  "Architecture",
+        "explanation":  "Quyết định kiến trúc ứng dụng (BLoC, MVVM, Clean Architecture) ngay từ đầu giúp giảm thiểu chi phí và công sức đập đi viết lại (Refactoring cost) khi dự án lớn lên."
+    },
+    {
+        "id":  61,
+        "question":  "Which step is required before running a Flutter app for the first time?",
+        "options":  [
+                        "A. Publishing the app",
+                        "B. Setting up the Flutter SDK",
+                        "C. Configuring a database",
+                        "D. Writing backend APIs"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Trước khi có thể chạy một ứng dụng Flutter lần đầu, máy tính bắt buộc phải được cài đặt Flutter SDK và cấu hình môi trường phát triển."
+    },
+    {
+        "id":  62,
+        "question":  "Why is immutability important in BLoC states?",
+        "options":  [
+                        "A. UI speed",
+                        "B. Predictable state changes",
+                        "C. Memory usage",
+                        "D. Theme control"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "Tính bất biến (Immutability) trong BLoC States đảm bảo mỗi trạng thái mới phát ra là độc lập, giúp việc so sánh trạng thái trước/sau rõ ràng và dự đoán được (Predictable state changes)."
+    },
+    {
+        "id":  63,
+        "question":  "Which HTTP header is commonly used for authorization?",
+        "options":  [
+                        "A. Content-Type",
+                        "B. Accept",
+                        "C. Authorization",
+                        "D. Cache-Control"
+                    ],
+        "answer":  "C",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Header \u0027Authorization\u0027 (ví dụ: Authorization: Bearer \u003ctoken\u003e) là chuẩn HTTP phổ biến nhất để gửi token xác thực của người dùng lên server."
+    },
+    {
+        "id":  64,
+        "question":  "Which method retrieves data from SharedPreferences?",
+        "options":  [
+                        "A. get()",
+                        "B. read()",
+                        "C. fetch()",
+                        "D. load()"
+                    ],
+        "answer":  "A",
+        "category":  "Data \u0026 Storage",
+        "explanation":  "Đối tượng SharedPreferences cung cấp các phương thức như getInt(), getString(), getBool() hoặc phương thức tổng quát get() để đọc dữ liệu đã lưu."
+    },
+    {
+        "id":  65,
+        "question":  "Why should state be kept as local as possible?",
+        "options":  [
+                        "A. Better animations",
+                        "B. Reduce unnecessary rebuilds",
+                        "C. Simplify UI",
+                        "D. Improve navigation"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "Giữ state ở phạm vi cục bộ nhất có thể giúp giảm thiểu số lượng widget bị rebuild không cần thiết, tối ưu hóa hiệu năng và đơn giản hóa việc debug."
+    },
+    {
+        "id":  66,
+        "question":  "What is the primary responsibility of the setState() method?",
+        "options":  [
+                        "A. Persist data",
+                        "B. Trigger widget rebuild",
+                        "C. Navigate screens",
+                        "D. Handle async tasks"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "Trách nhiệm chính của setState() là thông báo cho framework biết nội tại của State object đã thay đổi, từ đó kích hoạt widget rebuild lại UI."
+    },
+    {
+        "id":  67,
+        "question":  "Why are forms important in mobile applications?",
+        "options":  [
+                        "A. UI decoration",
+                        "B. User data collection",
+                        "C. State management",
+                        "D. Navigation"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Biểu mẫu (Forms) là thành phần then chốt trong ứng dụng di động để thu thập dữ liệu đầu vào từ người dùng (User data collection) một cách có kiểm soát."
+    },
+    {
+        "id":  68,
+        "question":  "What does golden testing verify?",
+        "options":  [
+                        "A. API responses",
+                        "B. UI appearance consistency",
+                        "C. Database state",
+                        "D. Authentication"
+                    ],
+        "answer":  "B",
+        "category":  "Testing",
+        "explanation":  "Golden Test (Snapshot testing) so sánh giao diện render thực tế của widget với một hình ảnh chuẩn (Golden image) để đảm bảo giao diện không bị sai lệch hiển thị."
+    },
+    {
+        "id":  69,
+        "question":  "Which Flutter tool helps debug network requests?",
+        "options":  [
+                        "A. DevTools",
+                        "B. Inspector",
+                        "C. Emulator",
+                        "D. Hot reload"
+                    ],
+        "answer":  "A",
+        "category":  "General",
+        "explanation":  "Bộ công cụ Flutter DevTools cung cấp tab Network chuyên dụng để soi chi tiết các request HTTP, xem header, body, mã phản hồi và thời gian tải."
+    },
+    {
+        "id":  70,
+        "question":  "What is the main purpose of the Container widget?",
+        "options":  [
+                        "A. Navigation",
+                        "B. Layout, styling, and positioning",
+                        "C. State management",
+                        "D. Network requests"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Container là một widget đa năng kết hợp vẽ layout, căn chỉnh lề (padding, margin), trang trí nền, bo góc, đổ bóng và định kích thước."
+    },
+    {
+        "id":  71,
+        "question":  "Which Flutter plugin provides SQLite support?",
+        "options":  [
+                        "A. hive",
+                        "B. moor",
+                        "C. sqlite",
+                        "D. shared_preferences"
+                    ],
+        "answer":  "C",
+        "category":  "Data \u0026 Storage",
+        "explanation":  "Plugin sqflite cung cấp các API để làm việc trực tiếp với cơ sở dữ liệu SQLite trên Android và iOS trong Flutter."
+    },
+    {
+        "id":  72,
+        "question":  "What is the main benefit of Flutter\u0027s widget-based architecture?",
+        "options":  [
+                        "A. Widgets are only used for layout design",
+                        "B. Widgets allow code reuse across platforms",
+                        "C. Widgets automatically manage databases",
+                        "D. Widgets replace backend services"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Kiến trúc Widget-based của Flutter cho phép tái sử dụng các khối UI linh hoạt trên nhiều màn hình và đa nền tảng (Android, iOS, Web, Desktop)."
+    },
+    {
+        "id":  73,
+        "question":  "Which widget reacts to async data from local storage?",
+        "options":  [
+                        "A. FutureBuilder",
+                        "B. StreamBuilder",
+                        "C. ListView",
+                        "D. Provider"
+                    ],
+        "answer":  "A",
+        "category":  "Data \u0026 Storage",
+        "explanation":  "FutureBuilder lắng nghe một Future bất đồng bộ (chẳng hạn đọc từ SharedPreferences hoặc SQLite) và tự động cập nhật UI dựa trên ConnectionState (waiting, done)."
+    },
+    {
+        "id":  74,
+        "question":  "What is Flutter primarily used for?",
+        "options":  [
+                        "A. Designing databases for mobile apps",
+                        "B. Creating native applications from a single codebase",
+                        "C. Developing server-side applications only",
+                        "D. Building operating systems for mobile devices"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Flutter là framework UI đa nền tảng cho phép tạo ứng dụng native chất lượng cao cho iOS, Android, Web, Desktop từ một codebase duy nhất."
+    },
+    {
+        "id":  75,
+        "question":  "Which practice improves API security?",
+        "options":  [
+                        "A. Hardcoding keys",
+                        "B. Using HTTPS",
+                        "C. Ignoring errors",
+                        "D. Using globals"
+                    ],
+        "answer":  "B",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Sử dụng HTTPS đảm bảo toàn bộ dữ liệu trao đổi giữa ứng dụng và máy chủ được mã hóa qua SSL/TLS, ngăn chặn kẻ xấu nghe lén hoặc đánh cắp thông tin."
+    },
+    {
+        "id":  76,
+        "question":  "What does status code 200 indicate?",
+        "options":  [
+                        "A. Client error",
+                        "B. Server error",
+                        "C. Success",
+                        "D. Redirect"
+                    ],
+        "answer":  "C",
+        "category":  "General",
+        "explanation":  "Mã trạng thái HTTP 200 (OK) thể hiện yêu cầu đã được máy chủ tiếp nhận và xử lý thành công (Success)."
+    },
+    {
+        "id":  77,
+        "question":  "Which widget pattern protects authenticated routes?",
+        "options":  [
+                        "A. Navigator",
+                        "B. Guard",
+                        "C. Route protection",
+                        "D. Middleware"
+                    ],
+        "answer":  "B",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Mô hình Route Guard (Route protection) kiểm tra trạng thái xác thực trước khi cho phép người dùng điều hướng vào các màn hình được bảo vệ."
+    },
+    {
+        "id":  78,
+        "question":  "Which widget allows both scrolling and app bars to interact?",
+        "options":  [
+                        "A. ListView",
+                        "B. CustomScrollView",
+                        "C. GridView",
+                        "D. Stack"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "CustomScrollView cho phép kết hợp nhiều sliver khác nhau (như SliverAppBar có hiệu ứng co giãn và SliverList) cùng cuộn mượt mà trong một viewport."
+    },
+    {
+        "id":  79,
+        "question":  "Which method resets all form fields?",
+        "options":  [
+                        "A. clear()",
+                        "B. reset()",
+                        "C. dispose()",
+                        "D. remove()"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Gọi phương thức FormState.reset() sẽ đưa tất cả các FormField trong form về lại giá trị ban đầu và xóa bỏ các thông báo lỗi xác thực hiện tại."
+    },
+    {
+        "id":  80,
+        "question":  "What happens if a non-nullable variable is not initialized in Dart?",
+        "options":  [
+                        "A. The app runs normally",
+                        "B. A runtime exception occurs",
+                        "C. A compile-time error occurs",
+                        "D. The value becomes null automatically"
+                    ],
+        "answer":  "C",
+        "category":  "Dart Basics",
+        "explanation":  "Với cơ chế Sound Null Safety trong Dart, việc khai báo một biến non-nullable mà không khởi tạo giá trị (và không có từ khóa late) sẽ gây ra lỗi ngay lúc biên dịch (Compile-time error)."
+    },
+    {
+        "id":  81,
+        "question":  "Which platforms can Flutter applications target using a single codebase?",
+        "options":  [
+                        "A. Android only",
+                        "B. iOS only",
+                        "C. Android, iOS, web, and desktop",
+                        "D. Web servers only"
+                    ],
+        "answer":  "C",
+        "category":  "General",
+        "explanation":  "Flutter hỗ trợ xuất bản ứng dụng đa nền tảng từ một codebase duy nhất: bao gồm Android, iOS, Web và Desktop (Windows, macOS, Linux)."
+    },
+    {
+        "id":  82,
+        "question":  "What is the role of v-sync in Flutter?",
+        "options":  [
+                        "A. Sync data",
+                        "B. Optimize animation resources",
+                        "C. Control layout",
+                        "D. Handle navigation"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "v-sync (Vertical Synchronization) giúp đồng bộ khung hình hoạt ảnh của Flutter với tần số quét của màn hình thiết bị, loại bỏ hiện tượng xé hình và tiết kiệm pin."
+    },
+    {
+        "id":  83,
+        "question":  "Why is secure authentication critical in mobile apps?",
+        "options":  [
+                        "A. UI quality",
+                        "B. Protect user data",
+                        "C. Reduce code",
+                        "D. Improve speed"
+                    ],
+        "answer":  "B",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Xác thực an toàn là tối quan trọng nhằm bảo vệ dữ liệu cá nhân của người dùng (Protect user data) và ngăn ngừa các hành vi truy cập trái phép vào tài khoản."
+    },
+    {
+        "id":  84,
+        "question":  "Which command builds a release APK?",
+        "options":  [
+                        "A. flutter run",
+                        "B. flutter build apk",
+                        "C. flutter doctor",
+                        "D. flutter clean"
+                    ],
+        "answer":  "B",
+        "category":  "Build \u0026 Tooling",
+        "explanation":  "Lệnh \flutter build apk là lệnh chính thức của Flutter CLI để đóng gói ứng dụng Android thành file APK ở chế độ release."
+    },
+    {
+        "id":  85,
+        "question":  "Why is clean architecture beneficial?",
+        "options":  [
+                        "A. Fewer files",
+                        "B. Easier maintenance and testing",
+                        "C. Better UI",
+                        "D. Faster builds"
+                    ],
+        "answer":  "B",
+        "category":  "Architecture",
+        "explanation":  "Clean Architecture tách biệt ứng dụng thành các tầng độc lập (Data, Domain, Presentation), giúp hệ thống dễ mở rộng, dễ bảo trì và dễ viết test (Easier maintenance and testing)."
+    },
+    {
+        "id":  86,
+        "question":  "Which Flutter test focuses on UI components?",
+        "options":  [
+                        "A. Unit test",
+                        "B. Widget test",
+                        "C. Integration test",
+                        "D. Load test"
+                    ],
+        "answer":  "B",
+        "category":  "Testing",
+        "explanation":  "Widget Test (Component test) kiểm tra việc render giao diện của một widget riêng lẻ và phản ứng của nó với các tương tác chạm, nhập liệu."
+    },
+    {
+        "id":  87,
+        "question":  "Which Dart data structure is best suited for storing an ordered collection of items?",
+        "options":  [
+                        "A. Set",
+                        "B. Map",
+                        "C. List",
+                        "D. Queue"
+                    ],
+        "answer":  "C",
+        "category":  "Dart Basics",
+        "explanation":  "Kiểu dữ liệu List trong Dart là một danh sách có thứ tự (ordered collection), cho phép lưu trữ và truy xuất các phần tử theo chỉ số index."
+    },
+    {
+        "id":  88,
+        "question":  "Why are widgets lightweight in Flutter?",
+        "options":  [
+                        "A. They manage system resources",
+                        "B. They are immutable descriptions",
+                        "C. They store UI state",
+                        "D. They handle rendering directly"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Widget trong Flutter rất nhẹ (lightweight) vì chúng chỉ là các đối tượng cấu hình bất biến (immutable descriptions), việc render thực tế do RenderObject đảm nhận."
+    },
+    {
+        "id":  89,
+        "question":  "What is implicit animation?",
+        "options":  [
+                        "A. Manual animation control",
+                        "B. Animation without controller",
+                        "C. API animation",
+                        "D. Navigation animation"
+                    ],
+        "answer":  "B",
+        "category":  "Animation",
+        "explanation":  "Hoạt ảnh ngầm định (Implicit Animation) là cơ chế tạo animation tự động trong Flutter mà không cần người lập trình phải tự quản lý AnimationController hay Ticker."
+    },
+    {
+        "id":  90,
+        "question":  "Which Flutter concept supports reactive UI updates?",
+        "options":  [
+                        "A. Manual refresh",
+                        "B. Widget rebuilding",
+                        "C. Hot restart",
+                        "D. Native callbacks"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Mô hình giao diện phản ứng (Reactive UI) của Flutter hoạt động bằng cách xây dựng lại các widget (Widget rebuilding) mỗi khi trạng thái (State) của ứng dụng thay đổi."
+    },
+    {
+        "id":  91,
+        "question":  "What is the benefit of composing widgets in Flutter?",
+        "options":  [
+                        "A. Faster compilation",
+                        "B. Better code reuse and UI consistency",
+                        "C. Reduced memory usage",
+                        "D. Automatic navigation"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Cơ chế hợp thành widget (Composition) cho phép kết hợp các widget nhỏ, đơn nhiệm thành các giao diện phức tạp, tăng tính tái sử dụng và đồng bộ giao diện."
+    },
+    {
+        "id":  92,
+        "question":  "Why are const widgets recommended?",
+        "options":  [
+                        "A. They improve readability",
+                        "B. They reduce rebuild cost",
+                        "C. They add state",
+                        "D. They handle navigation"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Khai báo constructor với từ khóa \u0027const\u0027 giúp Flutter chỉ khởi tạo widget đó một lần trong bộ nhớ và tái sử dụng nó, tránh việc tạo lại khi widget cha rebuild."
+    },
+    {
+        "id":  93,
+        "question":  "What is the main risk of improper state management?",
+        "options":  [
+                        "A. UI inconsistency",
+                        "B. Longer compile time",
+                        "C. Package conflicts",
+                        "D. Build errors"
+                    ],
+        "answer":  "A",
+        "category":  "State Management",
+        "explanation":  "Quản lý trạng thái không đúng cách dễ dẫn đến việc dữ liệu giữa các màn hình bị lệch nhau, gây ra tình trạng giao diện không nhất quán (UI inconsistency)."
+    },
+    {
+        "id":  94,
+        "question":  "What is technical debt?",
+        "options":  [
+                        "A. UI lag",
+                        "B. Future cost of poor design decisions",
+                        "C. Memory usage",
+                        "D. API limit"
+                    ],
+        "answer":  "B",
+        "category":  "Architecture",
+        "explanation":  "Nợ kỹ thuật (Technical Debt) là chi phí phát sinh trong tương lai khi chấp nhận viết code tạm bợ, thiết kế kém để kịp tiến độ thay vì xây dựng giải pháp bài bản."
+    },
+    {
+        "id":  95,
+        "question":  "Which approach helps reduce unnecessary widget rebuilds?",
+        "options":  [
+                        "A. Using global variables",
+                        "B. Fine-grained state updates",
+                        "C. Hot restart",
+                        "D. Large widgets"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "Cập nhật trạng thái chi tiết theo phạm vi hẹp (Fine-grained state updates) giúp chỉ có widget cần thiết mới bị rebuild, thay vì rebuild toàn bộ màn hình."
+    },
+    {
+        "id":  96,
+        "question":  "Which action best demonstrates Flutter\u0027s reactive UI model?",
+        "options":  [
+                        "A. Manually updating UI elements",
+                        "B. Rebuilding UI in response to state changes",
+                        "C. Editing layout XML",
+                        "D. Calling native APIs"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Đặc trưng lớn nhất của mô hình Reactive UI là giao diện được xây dựng lại tự động tương ứng với sự thay đổi của trạng thái (Rebuilding UI in response to state changes)."
+    },
+    {
+        "id":  97,
+        "question":  "Which package supports BLoC architecture?",
+        "options":  [
+                        "A. provider",
+                        "B. flutter_bloc",
+                        "C. sqlflite",
+                        "D. http"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "Package \flutter_bloc cung cấp các widget chuyên dụng như BlocBuilder, BlocListener, BlocProvider để triển khai kiến trúc BLoC trong Flutter."
+    },
+    {
+        "id":  98,
+        "question":  "Which widget can hide user input text when configured for password entry?",
+        "options":  [
+                        "A. TextField",
+                        "B. ObscureText",
+                        "C. SecureInput",
+                        "D. PasswordField"
+                    ],
+        "answer":  "A",
+        "category":  "Flutter UI",
+        "explanation":  "Widget TextField có thuộc tính obscureText: true giúp che giấu ký tự mật khẩu người dùng nhập vào bằng các dấu chấm tròn."
+    },
+    {
+        "id":  99,
+        "question":  "What is the purpose of SliverAppBar?",
+        "options":  [
+                        "A. Static app bar",
+                        "B. Scrollable flexible app bar",
+                        "C. Bottom navigation",
+                        "D. Drawer control"
+                    ],
+        "answer":  "B",
+        "category":  "Flutter UI",
+        "explanation":  "SliverAppBar là thanh tiêu đề cuộn linh hoạt (collapsing / flexible app bar), có thể tự động co giãn, biến mất hoặc ghim cố định khi người dùng cuộn trang."
+    },
+    {
+        "id":  100,
+        "question":  "Which HTTP method is typically used to retrieve data?",
+        "options":  [
+                        "A. POST",
+                        "B. PUT",
+                        "C. GET",
+                        "D. DELETE"
+                    ],
+        "answer":  "C",
+        "category":  "Network \u0026 Auth",
+        "explanation":  "Trong REST API, phương thức HTTP GET được quy chuẩn dùng để truy vấn và lấy dữ liệu (Retrieve data) từ máy chủ."
+    },
+    {
+        "id":  101,
+        "question":  "Why is Chapter 13 considered optional (Plus)?",
+        "options":  [
+                        "A. It replaces core concepts",
+                        "B. Apps can work without deep optimization",
+                        "C. It manages navigation",
+                        "D. It handles authentication"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Nội dung nâng cao (Plus/Optional) thường bao gồm các kỹ thuật tối ưu hóa chuyên sâu; ứng dụng vẫn có thể hoạt động tốt mà không bắt buộc phải áp dụng ngay."
+    },
+    {
+        "id":  102,
+        "question":  "Why should authentication state be centralized?",
+        "options":  [
+                        "A. Reduce UI code",
+                        "B. Ensure consistent access control",
+                        "C. Improve animations",
+                        "D. Simplify layout"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "Tập trung trạng thái xác thực về một nguồn duy nhất (Centralized Auth State) giúp kiểm soát quyền truy cập nhất quán trên toàn bộ các màn hình và API trong ứng dụng."
+    },
+    {
+        "id":  103,
+        "question":  "Which Dart keyword is used to define a constant value at compile time?",
+        "options":  [
+                        "A. final",
+                        "B. static",
+                        "C. const",
+                        "D. var"
+                    ],
+        "answer":  "C",
+        "category":  "Dart Basics",
+        "explanation":  "Từ khóa \u0027const\u0027 trong Dart dùng để khai báo một hằng số được tính toán và cố định ngay tại thời điểm biên dịch (Compile-time constant)."
+    },
+    {
+        "id":  104,
+        "question":  "Which status code indicates server error?",
+        "options":  [
+                        "A. 200",
+                        "B. 301",
+                        "C. 404",
+                        "D. 500"
+                    ],
+        "answer":  "D",
+        "category":  "General",
+        "explanation":  "Mã trạng thái HTTP 500 (Internal Server Error) biểu thị đã xảy ra lỗi phía máy chủ (Server error) khi xử lý yêu cầu."
+    },
+    {
+        "id":  105,
+        "question":  "What is the role of events in BLoC?",
+        "options":  [
+                        "A. Store UI",
+                        "B. Trigger state changes",
+                        "C. Render widgets",
+                        "D. Handle layout"
+                    ],
+        "answer":  "B",
+        "category":  "State Management",
+        "explanation":  "Trong BLoC, các Sự kiện (Events) là tín hiệu đầu vào kích hoạt BLoC xử lý nghiệp vụ và phát ra trạng thái mới (Trigger state changes)."
+    },
+    {
+        "id":  106,
+        "question":  "Which widget allows overlapping of its child widgets?",
+        "options":  [
+                        "A. Column",
+                        "B. Row",
+                        "C. Stack",
+                        "D. Expanded"
+                    ],
+        "answer":  "C",
+        "category":  "Flutter UI",
+        "explanation":  "Widget Stack cho phép xếp chồng các widget con lên nhau theo trục Z (chiều sâu không gian), phần tử khai báo sau sẽ đè lên phần tử trước."
+    },
+    {
+        "id":  107,
+        "question":  "What does CurvedAnimation provide?",
+        "options":  [
+                        "A. Layout control",
+                        "B. Animation curve behavior",
+                        "C. State updates",
+                        "D. Navigation"
+                    ],
+        "answer":  "B",
+        "category":  "Animation",
+        "explanation":  "CurvedAnimation kết hợp với AnimationController để áp dụng đường cong chuyển động phi tuyến tính (như Curves.easeInOut, Curves.bounceIn) cho hoạt ảnh."
+    },
+    {
+        "id":  108,
+        "question":  "Which type of test checks individual functions or classes?",
+        "options":  [
+                        "A. Widget test",
+                        "B. Integration test",
+                        "C. Unit test",
+                        "D. System test"
+                    ],
+        "answer":  "C",
+        "category":  "Dart Basics",
+        "explanation":  "Unit Test là loại kiểm thử cấp độ thấp nhất, tập trung kiểm tra tính đúng đắn của từng hàm, phương thức hoặc class logic riêng lẻ."
+    },
+    {
+        "id":  109,
+        "question":  "What is the main purpose of hot reload in Flutter?",
+        "options":  [
+                        "A. Improve runtime performance",
+                        "B. Instantly reflect code changes in UI",
+                        "C. Publish apps faster",
+                        "D. Reduce memory usage"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Tính năng Hot Reload của Flutter đưa mã code vừa sửa trực tiếp vào máy ảo Dart VM đang chạy, giúp cập nhật tức thì giao diện trong vòng chưa đầy 1 giây mà không mất trạng thái hiện tại."
+    },
+    {
+        "id":  110,
+        "question":  "Which phase involves gathering requirements?",
+        "options":  [
+                        "A. Implementation",
+                        "B. Design",
+                        "C. Analysis",
+                        "D. Testing"
+                    ],
+        "answer":  "C",
+        "category":  "General",
+        "explanation":  "Giai đoạn Phân tích (Analysis / Requirements Gathering) trong quy trình phát triển phần mềm là bước đầu tiên để thu thập và làm rõ các yêu cầu của dự án."
+    },
+    {
+        "id":  111,
+        "question":  "Why should database operations be asynchronous?",
+        "options":  [
+                        "A. Simplify syntax",
+                        "B. Avoid blocking UI thread",
+                        "C. Reduce code",
+                        "D. Improve theme"
+                    ],
+        "answer":  "B",
+        "category":  "Data \u0026 Storage",
+        "explanation":  "Các thao tác với cơ sở dữ liệu (I/O) tốn thời gian nên bắt buộc phải thực hiện bất đồng bộ (async/await) để không làm block luồng UI chính, tránh gây giật lag ứng dụng."
+    },
+    {
+        "id":  112,
+        "question":  "Which widget applies a theme to an entire Flutter application?",
+        "options":  [
+                        "A. Scaffold",
+                        "B. Theme",
+                        "C. MaterialApp",
+                        "D. Container"
+                    ],
+        "answer":  "C",
+        "category":  "Flutter UI",
+        "explanation":  "MaterialApp là widget gốc cấu hình chủ đề (thông qua thuộc tính \theme: ThemeData(...)), hệ thống định tuyến (routes) và localization cho toàn bộ ứng dụng Flutter."
+    },
+    {
+        "id":  113,
+        "question":  "What is the purpose of parsing JSON?",
+        "options":  [
+                        "A. Encrypt data",
+                        "B. Convert JSON into Dart objects",
+                        "C. Send requests",
+                        "D. Cache responses"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Parsing JSON là quá trình chuyển đổi chuỗi dữ liệu định dạng JSON nhận từ API thành các đối tượng Dart có cấu trúc kiểu dữ liệu rõ ràng (Type-safe models)."
+    },
+    {
+        "id":  114,
+        "question":  "How can data be passed to a new screen?",
+        "options":  [
+                        "A. Using global variables",
+                        "B. Via constructor arguments",
+                        "C. Using ThemeData",
+                        "D. Using Scaffold"
+                    ],
+        "answer":  "B",
+        "category":  "General",
+        "explanation":  "Cách tiêu chuẩn và an toàn nhất để truyền dữ liệu sang một màn hình mới trong Flutter là truyền qua các tham số của hàm khởi tạo (Constructor arguments) của Widget đó."
+    },
+    {
+        "id":  115,
+        "question":  "Why should animations be disposed properly?",
+        "options":  [
+                        "A. Improve UI",
+                        "B. Prevent memory leaks",
+                        "C. Speed up builds",
+                        "D. Fix layout"
+                    ],
+        "answer":  "B",
+        "category":  "Animation",
+        "explanation":  "AnimationController sử dụng tài nguyên phần cứng (Ticker) của hệ thống. Nếu không gọi controller.dispose() khi widget bị hủy, nó sẽ gây rò rỉ bộ nhớ (Memory leak)."
+    },
+    {
+        "id":  116,
+        "question":  "Which widget is best used to add fixed empty space?",
+        "options":  [
+                        "A. Padding",
+                        "B. Expanded",
+                        "C. SizedBox",
+                        "D. Container"
+                    ],
+        "answer":  "C",
+        "category":  "Flutter UI",
+        "explanation":  "Widget SizedBox có kích thước cố định (width và height) là widget nhẹ nhất và tối ưu nhất để chèn một khoảng trống cố định giữa các phần tử trong Row hoặc Column."
+    }
+];
+  </script>
+
+  <!-- Main Application Logic Script -->
+  <script>
+    // State management
+    let state = {
+      darkMode: false,
+      currentTab: 'exam',
+      // Exam state
+      exam: {
+        active: false,
+        totalCount: 50,
+        questions: [],
+        currentIndex: 0,
+        answers: {}, // index -> selectedLetter
+        flags: {},   // index -> boolean
+        timerSeconds: 50 * 60,
+        timerInterval: null,
+        startTime: null,
+        endTime: null,
+        submitted: false,
+        showInstantExplanation: true
+      },
+      // Flashcard state
+      flashcard: {
+        list: [...QUESTIONS_DATA],
+        currentIndex: 0,
+        isFlipped: false,
+        knownMap: {} // id -> boolean
+      },
+      // Practice state
+      practice: {
+        currentIndex: 0,
+        selectedAnswers: {} // index -> selected
+      },
+      bank: {
+        showAnswers: true
+      }
+    };
+
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check saved theme or system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        toggleDarkMode(true);
+      }
+      initFlashcards();
+      initPractice();
+      renderQuestionBank();
+      setupKeyboardShortcuts();
+    });
+
+    // Dark Mode Toggle
+    function toggleDarkMode(forceDark = null) {
+      if (forceDark !== null) {
+        state.darkMode = forceDark;
+      } else {
+        state.darkMode = !state.darkMode;
+      }
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      if (state.darkMode) {
+        html.classList.add('dark');
+        icon.innerText = '☀️';
+      } else {
+        html.classList.remove('dark');
+        icon.innerText = '🌙';
+      }
+    }
+
+    // Tab Switching
+    function switchTab(tabId) {
+      state.currentTab = tabId;
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      document.getElementById('view-' + tabId).classList.remove('hidden');
+
+      // Update desktop tab styles
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-indigo-600', 'dark:text-indigo-400', 'shadow-sm');
+        btn.classList.add('text-slate-600', 'dark:text-slate-400');
+      });
+      const activeBtn = document.getElementById('tab-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+        activeBtn.classList.add('bg-white', 'dark:bg-slate-900', 'text-indigo-600', 'dark:text-indigo-400', 'shadow-sm');
+      }
+
+      // If switching to flashcard, ensure not flipped
+      if (tabId === 'flashcards') {
+        state.flashcard.isFlipped = false;
+        updateFlashcardUI();
+      }
+    }
+
+    // Keyboard Shortcuts
+    function setupKeyboardShortcuts() {
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+        if (state.currentTab === 'exam' && state.exam.active && !state.exam.submitted) {
+          if (e.key === 'ArrowLeft') prevExamQuestion();
+          if (e.key === 'ArrowRight') nextExamQuestion();
+          if (['1', '2', '3', '4'].includes(e.key)) {
+            const letter = ['A', 'B', 'C', 'D'][parseInt(e.key) - 1];
+            selectExamOption(letter);
+          }
+          if (e.key.toLowerCase() === 'f') toggleExamFlag();
+        } else if (state.currentTab === 'flashcards') {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            flipFlashcard();
+          }
+          if (e.key === 'ArrowLeft') prevFlashcard();
+          if (e.key === 'ArrowRight') nextFlashcard();
+        }
+      });
+    }
+
+    // ========================================================
+    // EXAM LOGIC (MOCK TEST 50 QUESTIONS)
+    // ========================================================
+
+    function startExam(count) {
+      state.exam.totalCount = Math.min(count, QUESTIONS_DATA.length);
+      state.exam.active = true;
+      state.exam.submitted = false;
+      state.exam.currentIndex = 0;
+      state.exam.answers = {};
+      state.exam.flags = {};
+      state.exam.timerSeconds = state.exam.totalCount * 60; // 1 min per question
+      state.exam.startTime = new Date();
+      state.exam.showInstantExplanation = document.getElementById('exam-instant-exp-toggle').checked;
+
+      // Randomly sample and shuffle questions from bank
+      const shuffled = [...QUESTIONS_DATA].sort(() => 0.5 - Math.random());
+      state.exam.questions = shuffled.slice(0, state.exam.totalCount);
+
+      // Toggle cards
+      document.getElementById('exam-start-card').classList.add('hidden');
+      document.getElementById('exam-result-card').classList.add('hidden');
+      document.getElementById('exam-active-card').classList.remove('hidden');
+
+      // Update instant explanation live toggle button text
+      updateInstantExpLiveButton();
+
+      // Build Question Palette
+      buildExamPalette();
+
+      // Start timer
+      startExamTimer();
+
+      // Render first question
+      renderExamCurrentQuestion();
+    }
+
+    function toggleExamInstantExpLive() {
+      state.exam.showInstantExplanation = !state.exam.showInstantExplanation;
+      updateInstantExpLiveButton();
+      renderExamCurrentQuestion();
+    }
+
+    function updateInstantExpLiveButton() {
+      const btn = document.getElementById('btn-toggle-instant-exp-live');
+      if (state.exam.showInstantExplanation) {
+        btn.innerText = 'Đang bật 💡';
+        btn.className = 'text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline';
+      } else {
+        btn.innerText = 'Đang tắt 🔕';
+        btn.className = 'text-xs font-bold text-slate-400 hover:underline';
+      }
+    }
+
+    function startExamTimer() {
+      if (state.exam.timerInterval) clearInterval(state.exam.timerInterval);
+      updateTimerDisplay();
+
+      state.exam.timerInterval = setInterval(() => {
+        state.exam.timerSeconds--;
+        updateTimerDisplay();
+
+        if (state.exam.timerSeconds <= 0) {
+          clearInterval(state.exam.timerInterval);
+          alert('Hết giờ làm bài! Hệ thống sẽ tự động nộp bài thi của bạn.');
+          submitExamFinal();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(state.exam.timerSeconds / 60);
+      const secs = state.exam.timerSeconds % 60;
+      const display = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+      const timerEl = document.getElementById('exam-timer');
+      timerEl.innerText = display;
+
+      if (state.exam.timerSeconds < 300) { // under 5 mins
+        timerEl.classList.remove('text-indigo-600', 'dark:text-indigo-400');
+        timerEl.classList.add('text-rose-600', 'dark:text-rose-400', 'animate-pulse');
+      }
+    }
+
+    function buildExamPalette() {
+      const palette = document.getElementById('exam-palette');
+      palette.innerHTML = '';
+      for (let i = 0; i < state.exam.totalCount; i++) {
+        const btn = document.createElement('button');
+        btn.id = 'palette-btn-' + i;
+        btn.innerText = i + 1;
+        btn.className = 'w-full aspect-square rounded-xl text-xs font-bold transition-all border flex items-center justify-center relative bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:scale-105';
+        btn.onclick = () => jumpToExamQuestion(i);
+        palette.appendChild(btn);
+      }
+    }
+
+    function updatePaletteButton(idx) {
+      const btn = document.getElementById('palette-btn-' + idx);
+      if (!btn) return;
+
+      const isCurrent = (idx === state.exam.currentIndex);
+      const isAnswered = (state.exam.answers[idx] !== undefined);
+      const isFlagged = (state.exam.flags[idx] === true);
+
+      btn.className = 'w-full aspect-square rounded-xl text-xs font-bold transition-all border flex items-center justify-center relative ';
+
+      if (isCurrent) {
+        btn.className += 'ring-2 ring-indigo-500 ring-offset-2 dark:ring-offset-slate-900 ';
+      }
+
+      if (isAnswered) {
+        btn.className += 'bg-indigo-600 border-indigo-600 text-white shadow-sm ';
+      } else {
+        btn.className += 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 ';
+      }
+
+      // Flag indicator
+      const existingDot = btn.querySelector('.flag-dot');
+      if (isFlagged) {
+        if (!existingDot) {
+          const dot = document.createElement('span');
+          dot.className = 'flag-dot absolute -top-1 -right-1 w-3 h-3 rounded-full bg-amber-500 border-2 border-white dark:border-slate-900';
+          btn.appendChild(dot);
+        }
+      } else {
+        if (existingDot) existingDot.remove();
+      }
+    }
+
+    function renderExamCurrentQuestion() {
+      const idx = state.exam.currentIndex;
+      const q = state.exam.questions[idx];
+
+      document.getElementById('exam-q-number').innerText = `Câu ${idx + 1} / ${state.exam.totalCount}`;
+      document.getElementById('exam-q-category').innerText = q.category || 'PRM393';
+      document.getElementById('exam-q-text').innerText = q.question;
+
+      // Update flag button state
+      const isFlagged = !!state.exam.flags[idx];
+      document.getElementById('flag-text').innerText = isFlagged ? 'Đã gắn cờ' : 'Gắn cờ xem lại';
+      document.getElementById('btn-exam-flag').className = isFlagged 
+        ? 'flex items-center gap-1.5 text-xs font-semibold text-amber-600 bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 px-3 py-1 rounded-lg transition-colors'
+        : 'flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-800 transition-colors';
+
+      // Render options
+      const container = document.getElementById('exam-options-container');
+      container.innerHTML = '';
+
+      const selected = state.exam.answers[idx];
+      const hasAnswered = (selected !== undefined);
+      const isInstantMode = state.exam.showInstantExplanation;
+
+      q.options.forEach((optStr) => {
+        const letter = optStr.charAt(0); // A, B, C, D
+        const isSelected = (selected === letter);
+        const isCorrectLetter = (q.answer === letter);
+
+        const btn = document.createElement('button');
+        btn.onclick = () => selectExamOption(letter);
+
+        let optClass = 'w-full p-4 rounded-2xl border text-left flex items-start gap-3.5 transition-all ';
+
+        if (hasAnswered && isInstantMode) {
+          if (isCorrectLetter) {
+            optClass += 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-950 dark:text-emerald-100 font-bold ring-2 ring-emerald-500 shadow-sm ';
+          } else if (isSelected && !isCorrectLetter) {
+            optClass += 'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-950 dark:text-rose-100 font-semibold ring-2 ring-rose-500 shadow-sm ';
+          } else {
+            optClass += 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 opacity-60 ';
+          }
+        } else {
+          if (isSelected) {
+            optClass += 'bg-indigo-50/80 dark:bg-indigo-950/50 border-indigo-500 ring-2 ring-indigo-500 text-indigo-950 dark:text-indigo-100 font-semibold shadow-sm ';
+          } else {
+            optClass += 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200 ';
+          }
+        }
+
+        btn.className = optClass;
+
+        let badgeClass = 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
+        if (hasAnswered && isInstantMode) {
+          if (isCorrectLetter) badgeClass = 'bg-emerald-600 text-white';
+          else if (isSelected) badgeClass = 'bg-rose-600 text-white';
+        } else if (isSelected) {
+          badgeClass = 'bg-indigo-600 text-white';
+        }
+
+        btn.innerHTML = `
+          <span class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-extrabold flex-shrink-0 transition-colors ${badgeClass}">${letter}</span>
+          <span class="text-sm pt-0.5 leading-snug flex-1">${optStr.replace(/^[A-D]\.\s*/, '')}</span>
+          ${hasAnswered && isInstantMode && isCorrectLetter ? '<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">✓ Đúng</span>' : ''}
+          ${hasAnswered && isInstantMode && isSelected && !isCorrectLetter ? '<span class="text-xs font-bold text-rose-600 dark:text-rose-400">✗ Bạn chọn</span>' : ''}
+        `;
+        container.appendChild(btn);
+      });
+
+      // Instant Explanation Box
+      const expBox = document.getElementById('exam-instant-exp-box');
+      if (hasAnswered && isInstantMode) {
+        expBox.classList.remove('hidden');
+        const isRight = (selected === q.answer);
+        expBox.className = `mt-6 p-5 rounded-2xl border transition-all ${
+          isRight 
+            ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' 
+            : 'bg-rose-50/80 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800 text-rose-900 dark:text-rose-200'
+        }`;
+        expBox.innerHTML = `
+          <div class="flex items-center gap-2 font-extrabold text-sm mb-2">
+            <span>${isRight ? '✅ Bạn đã chọn đúng!' : '❌ Bạn đã chọn chưa chính xác.'}</span>
+            <span>Đáp án đúng: <strong>${q.answer}</strong></span>
+          </div>
+          <div class="pt-2 border-t border-slate-200/60 dark:border-slate-700/60 text-xs leading-relaxed text-slate-800 dark:text-slate-200">
+            <strong class="text-indigo-600 dark:text-indigo-400 font-bold block mb-1">💡 Giải thích chi tiết:</strong>
+            ${q.explanation || 'Đáp án chính xác được xác nhận theo giáo trình PRM393.'}
+          </div>
+        `;
+      } else {
+        expBox.classList.add('hidden');
+      }
+
+      // Update Nav buttons
+      document.getElementById('btn-exam-prev').disabled = (idx === 0);
+      document.getElementById('btn-exam-next').innerText = (idx === state.exam.totalCount - 1) ? 'Xem lại bài 🏁' : 'Câu Sau →';
+
+      // Update Palette and Progress
+      updateAllPaletteButtons();
+      updateExamProgress();
+    }
+
+    function selectExamOption(letter) {
+      const idx = state.exam.currentIndex;
+      state.exam.answers[idx] = letter;
+      renderExamCurrentQuestion();
+    }
+
+    function toggleExamFlag() {
+      const idx = state.exam.currentIndex;
+      state.exam.flags[idx] = !state.exam.flags[idx];
+      renderExamCurrentQuestion();
+    }
+
+    function prevExamQuestion() {
+      if (state.exam.currentIndex > 0) {
+        state.exam.currentIndex--;
+        renderExamCurrentQuestion();
+      }
+    }
+
+    function nextExamQuestion() {
+      if (state.exam.currentIndex < state.exam.totalCount - 1) {
+        state.exam.currentIndex++;
+        renderExamCurrentQuestion();
+      }
+    }
+
+    function jumpToExamQuestion(idx) {
+      state.exam.currentIndex = idx;
+      renderExamCurrentQuestion();
+    }
+
+    function updateAllPaletteButtons() {
+      for (let i = 0; i < state.exam.totalCount; i++) {
+        updatePaletteButton(i);
+      }
+    }
+
+    function updateExamProgress() {
+      const answeredCount = Object.keys(state.exam.answers).length;
+      document.getElementById('exam-progress-text').innerText = `${answeredCount} / ${state.exam.totalCount}`;
+      const pct = (answeredCount / state.exam.totalCount) * 100;
+      document.getElementById('exam-progress-bar').style.width = pct + '%';
+    }
+
+    function confirmSubmitExam() {
+      const answeredCount = Object.keys(state.exam.answers).length;
+      const unanswered = state.exam.totalCount - answeredCount;
+      const warnText = unanswered > 0 
+        ? `Bạn còn <strong>${unanswered}</strong> câu chưa chọn đáp án. Bạn có muốn nộp bài luôn không?`
+        : 'Bạn đã hoàn thành tất cả các câu hỏi! Bạn có chắc chắn muốn nộp bài?';
+      document.getElementById('confirm-unanswered-warning').innerHTML = warnText;
+      document.getElementById('confirm-modal').classList.remove('hidden');
+    }
+
+    function closeConfirmModal() {
+      document.getElementById('confirm-modal').classList.add('hidden');
+    }
+
+    function submitExamFinal() {
+      closeConfirmModal();
+      clearInterval(state.exam.timerInterval);
+      state.exam.active = false;
+      state.exam.submitted = true;
+      state.exam.endTime = new Date();
+
+      // Calculate score
+      let correctCount = 0;
+      state.exam.questions.forEach((q, idx) => {
+        if (state.exam.answers[idx] === q.answer) {
+          correctCount++;
+        }
+      });
+
+      const total = state.exam.totalCount;
+      const pct = Math.round((correctCount / total) * 100);
+      const gpa = ((correctCount / total) * 10).toFixed(1);
+
+      // Duration
+      const diffSecs = Math.floor((state.exam.endTime - state.exam.startTime) / 1000);
+      const m = Math.floor(diffSecs / 60);
+      const s = diffSecs % 60;
+      const timeStr = `${m} phút ${s} giây`;
+
+      // Display Result
+      document.getElementById('res-score').innerText = `${correctCount} / ${total}`;
+      document.getElementById('res-percentage').innerText = `${pct}%`;
+      document.getElementById('res-gpa').innerText = `${gpa} / 10`;
+      document.getElementById('res-time').innerText = timeStr;
+
+      const wrongCount = total - correctCount;
+      document.getElementById('wrong-count').innerText = wrongCount;
+
+      const badge = document.getElementById('result-status-badge');
+      if (correctCount >= Math.ceil(total * 0.5)) {
+        badge.className = 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-400';
+        badge.innerText = '🎉 XUẤT SẮC - ĐẠT YÊU CẦU (PASS)';
+      } else {
+        badge.className = 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold bg-rose-100 text-rose-700 dark:bg-rose-950/80 dark:text-rose-400';
+        badge.innerText = '⚠️ CHƯA ĐẠT - CẦN ÔN LẠI (FAILED)';
+      }
+
+      // Render review list
+      renderExamReviewList('all');
+
+      // Toggle views
+      document.getElementById('exam-active-card').classList.add('hidden');
+      document.getElementById('exam-result-card').classList.remove('hidden');
+    }
+
+    function renderExamReviewList(filter = 'all') {
+      const container = document.getElementById('exam-review-list');
+      container.innerHTML = '';
+
+      state.exam.questions.forEach((q, idx) => {
+        const userAnswer = state.exam.answers[idx];
+        const isCorrect = (userAnswer === q.answer);
+
+        if (filter === 'wrong' && isCorrect) return;
+        if (filter === 'correct' && !isCorrect) return;
+
+        const card = document.createElement('div');
+        card.className = `p-6 rounded-3xl border transition-all ${
+          isCorrect 
+            ? 'bg-emerald-50/30 dark:bg-emerald-950/10 border-emerald-200 dark:border-emerald-800/40' 
+            : 'bg-rose-50/30 dark:bg-rose-950/10 border-rose-200 dark:border-rose-800/40'
+        }`;
+
+        let optionsHtml = '';
+        q.options.forEach(opt => {
+          const letter = opt.charAt(0);
+          const isUserChoice = (userAnswer === letter);
+          const isRightChoice = (q.answer === letter);
+
+          let optStyle = 'p-3 rounded-xl text-sm flex items-start gap-3 ';
+          if (isRightChoice) {
+            optStyle += 'bg-emerald-100/80 dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-200 font-semibold border border-emerald-300 dark:border-emerald-700';
+          } else if (isUserChoice && !isRightChoice) {
+            optStyle += 'bg-rose-100/80 dark:bg-rose-900/40 text-rose-900 dark:text-rose-200 line-through border border-rose-300 dark:border-rose-700';
+          } else {
+            optStyle += 'bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300';
+          }
+
+          optionsHtml += `
+            <div class="${optStyle}">
+              <span class="font-bold">${letter}.</span>
+              <span>${opt.replace(/^[A-D]\.\s*/, '')}</span>
+              ${isRightChoice ? '<span class="ml-auto text-emerald-600 dark:text-emerald-400 font-bold">✓ Đáp án đúng</span>' : ''}
+              ${isUserChoice && !isRightChoice ? '<span class="ml-auto text-rose-600 dark:text-rose-400 font-bold">✗ Bạn đã chọn</span>' : ''}
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200/60 dark:border-slate-800">
+            <span class="text-xs font-extrabold uppercase px-3 py-1 rounded-full ${
+              isCorrect ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300' : 'bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300'
+            }">
+              Câu ${idx + 1}: ${isCorrect ? 'ĐÚNG' : 'SAI'}
+            </span>
+            <span class="text-xs text-slate-400">${q.category}</span>
+          </div>
+          <p class="font-bold text-slate-900 dark:text-white mb-4 leading-relaxed">${q.question}</p>
+          <div class="space-y-2 mb-3">${optionsHtml}</div>
+          <div class="mt-4 p-4 rounded-2xl bg-indigo-50/70 dark:bg-slate-800/70 border border-indigo-100 dark:border-slate-700/60 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+            <strong class="text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-1.5 mb-1 text-xs">
+              <span>💡</span> Giải thích chi tiết:
+            </strong>
+            <p>${q.explanation || 'Đáp án chính xác được xác nhận theo giáo trình PRM393.'}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterResultView(filter) {
+      ['all', 'wrong', 'correct'].forEach(f => {
+        const btn = document.getElementById('res-filter-' + f);
+        if (btn) {
+          if (f === filter) {
+            btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white';
+          } else {
+            btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
+          }
+        }
+      });
+      renderExamReviewList(filter);
+    }
+
+    function reviewWrongAnswersOnly() {
+      filterResultView('wrong');
+      document.getElementById('exam-review-list').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ========================================================
+    // FLASHCARDS LOGIC
+    // ========================================================
+
+    function initFlashcards() {
+      state.flashcard.currentIndex = 0;
+      state.flashcard.isFlipped = false;
+      updateFlashcardUI();
+    }
+
+    function flipFlashcard() {
+      state.flashcard.isFlipped = !state.flashcard.isFlipped;
+      const inner = document.getElementById('flashcard-inner');
+      if (state.flashcard.isFlipped) {
+        inner.classList.add('rotate-y-180');
+      } else {
+        inner.classList.remove('rotate-y-180');
+      }
+    }
+
+    function updateFlashcardUI() {
+      const q = state.flashcard.list[state.flashcard.currentIndex];
+      const idx = state.flashcard.currentIndex;
+      const total = state.flashcard.list.length;
+
+      document.getElementById('fc-counter').innerText = `${idx + 1} / ${total}`;
+      document.getElementById('fc-front-cat').innerText = q.category || 'PRM393';
+      document.getElementById('fc-front-question').innerText = q.question;
+
+      // Render options on front
+      const optContainer = document.getElementById('fc-front-options');
+      optContainer.innerHTML = '';
+      q.options.forEach(opt => {
+        const div = document.createElement('div');
+        div.className = 'p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 font-medium';
+        div.innerText = opt;
+        optContainer.appendChild(div);
+      });
+
+      // Back Face
+      document.getElementById('fc-back-letter').innerText = q.answer;
+      
+      // Find full text of correct answer
+      let fullAns = '';
+      q.options.forEach(o => {
+        if (o.startsWith(q.answer + '.')) fullAns = o;
+      });
+      document.getElementById('fc-back-answer-text').innerText = fullAns || q.answer;
+      document.getElementById('fc-back-explanation').innerText = q.explanation || 'Đáp án chính xác được xác nhận theo giáo trình PRM393.';
+
+      // Reset flip
+      state.flashcard.isFlipped = false;
+      document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+    }
+
+    function nextFlashcard() {
+      if (state.flashcard.currentIndex < state.flashcard.list.length - 1) {
+        state.flashcard.currentIndex++;
+        updateFlashcardUI();
+      }
+    }
+
+    function prevFlashcard() {
+      if (state.flashcard.currentIndex > 0) {
+        state.flashcard.currentIndex--;
+        updateFlashcardUI();
+      }
+    }
+
+    function shuffleFlashcards() {
+      state.flashcard.list.sort(() => 0.5 - Math.random());
+      state.flashcard.currentIndex = 0;
+      updateFlashcardUI();
+    }
+
+    function toggleStarFlashcard() {
+      const btn = document.getElementById('btn-fc-star');
+      btn.classList.toggle('text-amber-500');
+    }
+
+    function markFlashcardKnown(known) {
+      const currentQ = state.flashcard.list[state.flashcard.currentIndex];
+      state.flashcard.knownMap[currentQ.id] = known;
+      nextFlashcard();
+    }
+
+    // ========================================================
+    // PRACTICE LOGIC (LEARN WITH IMMEDIATE FEEDBACK)
+    // ========================================================
+
+    function initPractice() {
+      state.practice.currentIndex = 0;
+      renderPracticeQuestion();
+    }
+
+    function renderPracticeQuestion() {
+      const q = QUESTIONS_DATA[state.practice.currentIndex];
+      const idx = state.practice.currentIndex;
+      const total = QUESTIONS_DATA.length;
+
+      document.getElementById('practice-counter').innerText = `Câu ${idx + 1} / ${total}`;
+      document.getElementById('practice-cat').innerText = q.category || 'PRM393';
+      document.getElementById('practice-q-text').innerText = q.question;
+
+      const container = document.getElementById('practice-options');
+      container.innerHTML = '';
+
+      const feedback = document.getElementById('practice-feedback');
+      feedback.classList.add('hidden');
+
+      q.options.forEach(opt => {
+        const letter = opt.charAt(0);
+        const btn = document.createElement('button');
+        btn.onclick = () => checkPracticeAnswer(letter);
+        btn.className = 'w-full p-4 rounded-2xl border text-left flex items-start gap-3.5 transition-all bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200';
+        btn.innerHTML = `
+          <span class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-extrabold flex-shrink-0 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${letter}</span>
+          <span class="text-sm pt-0.5">${opt.replace(/^[A-D]\.\s*/, '')}</span>
+        `;
+        container.appendChild(btn);
+      });
+    }
+
+    function checkPracticeAnswer(letter) {
+      const q = QUESTIONS_DATA[state.practice.currentIndex];
+      const isCorrect = (letter === q.answer);
+      const feedback = document.getElementById('practice-feedback');
+
+      feedback.classList.remove('hidden');
+      if (isCorrect) {
+        feedback.className = 'p-5 rounded-2xl border bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-950 dark:text-emerald-100 text-sm leading-relaxed';
+        feedback.innerHTML = `
+          <div class="flex items-center gap-2 font-bold mb-1.5 text-emerald-700 dark:text-emerald-400">
+            <span>✅ Chính xác!</span>
+            <span>Đáp án đúng là <strong>${q.answer}</strong></span>
+          </div>
+          <div class="mt-2.5 pt-2.5 border-t border-emerald-200/60 dark:border-emerald-800/60 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+            <strong class="text-indigo-600 dark:text-indigo-400 font-bold block mb-1">💡 Giải thích chi tiết:</strong>
+            ${q.explanation || 'Đáp án chính xác được xác nhận theo giáo trình PRM393.'}
+          </div>
+        `;
+      } else {
+        feedback.className = 'p-5 rounded-2xl border bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800 text-rose-950 dark:text-rose-100 text-sm leading-relaxed';
+        feedback.innerHTML = `
+          <div class="flex items-center gap-2 font-bold mb-1.5 text-rose-700 dark:text-rose-400">
+            <span>❌ Chưa chính xác.</span>
+            <span>Bạn đã chọn <strong>${letter}</strong> — Đáp án đúng là <strong>${q.answer}</strong></span>
+          </div>
+          <div class="mt-2.5 pt-2.5 border-t border-rose-200/60 dark:border-rose-800/60 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+            <strong class="text-indigo-600 dark:text-indigo-400 font-bold block mb-1">💡 Giải thích chi tiết:</strong>
+            ${q.explanation || 'Đáp án chính xác được xác nhận theo giáo trình PRM393.'}
+          </div>
+        `;
+      }
+    }
+
+    function nextPracticeQuestion() {
+      if (state.practice.currentIndex < QUESTIONS_DATA.length - 1) {
+        state.practice.currentIndex++;
+        renderPracticeQuestion();
+      }
+    }
+
+    function prevPracticeQuestion() {
+      if (state.practice.currentIndex > 0) {
+        state.practice.currentIndex--;
+        renderPracticeQuestion();
+      }
+    }
+
+    // ========================================================
+    // QUESTION BANK LOGIC
+    // ========================================================
+
+    function renderQuestionBank() {
+      const search = (document.getElementById('bank-search').value || '').toLowerCase().trim();
+      const catFilter = document.getElementById('bank-category-filter').value;
+      const container = document.getElementById('bank-questions-list');
+      container.innerHTML = '';
+
+      let count = 0;
+      QUESTIONS_DATA.forEach((q, idx) => {
+        // filter
+        if (catFilter !== 'ALL' && q.category !== catFilter) return;
+        if (search) {
+          const matchQ = q.question.toLowerCase().includes(search);
+          const matchOpts = q.options.some(o => o.toLowerCase().includes(search));
+          const matchExp = (q.explanation || '').toLowerCase().includes(search);
+          if (!matchQ && !matchOpts && !matchExp) return;
+        }
+
+        count++;
+
+        const card = document.createElement('div');
+        card.className = 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-3';
+
+        let optionsHtml = '';
+        q.options.forEach(opt => {
+          const letter = opt.charAt(0);
+          const isCorrect = (letter === q.answer);
+          optionsHtml += `
+            <div class="text-xs p-2.5 rounded-xl border ${
+              isCorrect && state.bank.showAnswers
+                ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 font-bold text-emerald-800 dark:text-emerald-300' 
+                : 'bg-slate-50 dark:bg-slate-800/40 border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300'
+            }">
+              ${opt} ${isCorrect && state.bank.showAnswers ? '✓ (Đáp án đúng)' : ''}
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span class="font-extrabold text-indigo-600 dark:text-indigo-400">#${q.id}</span>
+            <span class="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">${q.category}</span>
+          </div>
+          <h4 class="font-bold text-slate-900 dark:text-white text-sm leading-relaxed">${q.question}</h4>
+          <div class="space-y-1.5">${optionsHtml}</div>
+          ${state.bank.showAnswers ? `
+            <div class="mt-2.5 p-3 rounded-xl bg-indigo-50/60 dark:bg-slate-800/60 border border-indigo-100 dark:border-slate-700/60 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              <strong class="text-indigo-600 dark:text-indigo-400 font-bold block mb-0.5">💡 Giải thích chi tiết:</strong>
+              ${q.explanation || 'Đáp án chính xác được xác nhận theo giáo trình PRM393.'}
+            </div>
+          ` : ''}
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('bank-match-count').innerText = count;
+    }
+
+    function toggleAllAnswers() {
+      state.bank.showAnswers = !state.bank.showAnswers;
+      document.getElementById('btn-toggle-answers').innerText = state.bank.showAnswers ? 'Ẩn tất cả đáp án & giải thích' : 'Hiện tất cả đáp án & giải thích';
+      renderQuestionBank();
+    }
+  </script>
+</body>
+</html>
