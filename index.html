@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PRM393 QuizMaster - Ôn Thi Lập Trình Di Động (Kèm Giải Thích)</title>
+  <title>PRM393 QuizMaster - Ôn Thi Lập Trình Di Động</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,9 +54,9 @@
         <div>
           <div class="flex items-center gap-2">
             <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">PRM393 QuizMaster</span>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 uppercase tracking-wider">Có giải thích</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 uppercase tracking-wider">FTES Bank</span>
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400">116 câu hỏi chuẩn hóa • 5 đề thi FTES</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">116 câu hỏi chuẩn hóa • 5 đề thi</p>
         </div>
       </div>
 
@@ -117,7 +117,7 @@
         <div>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Chế Độ Thi Thử PRM393</h2>
           <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-            Hệ thống sẽ lấy ngẫu nhiên <strong>50 câu hỏi</strong> từ kho 116 câu độc nhất, kèm giải thích chi tiết cho từng đáp án.
+            Hệ thống sẽ lấy ngẫu nhiên <strong>50 câu hỏi</strong> từ kho 116 câu độc nhất, mô phỏng kỳ thi trắc nghiệm thực tế môn Lập trình di động.
           </p>
         </div>
 
@@ -136,16 +136,15 @@
           </div>
         </div>
 
-        <!-- Mode Option: Instant Explanation Toggle -->
-        <div class="p-4 bg-indigo-50/70 dark:bg-indigo-950/40 rounded-2xl border border-indigo-100 dark:border-indigo-900/60 flex items-center justify-between text-left">
+        <!-- Exam Policy Notice: Hidden during exam, shown after submit -->
+        <div class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-800 text-left flex items-start gap-3.5">
+          <span class="text-2xl flex-shrink-0 pt-0.5">🔒</span>
           <div>
-            <span class="text-sm font-bold text-indigo-950 dark:text-indigo-200">💡 Chế độ học tập (Hiện giải thích ngay)</span>
-            <p class="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Hiển thị đáp án đúng và giải thích chi tiết ngay sau khi bạn chọn phương án.</p>
+            <span class="text-sm font-bold text-slate-900 dark:text-white">Quy chế thi thử chuẩn</span>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+              Trong lúc làm bài, hệ thống <strong>hoàn toàn ẩn đáp án đúng</strong> để bạn tự đánh giá năng lực thực tế. Toàn bộ <strong>đáp án đúng và giải thích chi tiết</strong> sẽ được hiển thị ngay sau khi bạn bấm <strong>Nộp bài</strong>.
+            </p>
           </div>
-          <label class="relative inline-flex items-center cursor-pointer ml-4 flex-shrink-0">
-            <input type="checkbox" id="exam-instant-exp-toggle" class="sr-only peer" checked>
-            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
-          </label>
         </div>
 
         <div class="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
@@ -166,7 +165,7 @@
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm">
             
             <!-- Question Header -->
-            <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
               <div class="flex items-center gap-3">
                 <span id="exam-q-number" class="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 rounded-full">
                   Câu 1 / 50
@@ -175,12 +174,9 @@
                   State Management
                 </span>
               </div>
-              
-              <div class="flex items-center gap-3">
-                <button onclick="toggleExamFlag()" id="btn-exam-flag" class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-800 transition-colors">
-                  <span id="flag-icon">🚩</span> <span id="flag-text">Gắn cờ xem lại</span>
-                </button>
-              </div>
+              <button onclick="toggleExamFlag()" id="btn-exam-flag" class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-800 transition-colors">
+                <span id="flag-icon">🚩</span> <span id="flag-text">Gắn cờ xem lại</span>
+              </button>
             </div>
 
             <!-- Question Text -->
@@ -190,14 +186,9 @@
               </h3>
             </div>
 
-            <!-- Options List -->
+            <!-- Options List (Neutral during test, no spoilers) -->
             <div id="exam-options-container" class="space-y-3">
               <!-- Dynamically rendered options -->
-            </div>
-
-            <!-- Instant Explanation Box (Visible if instant mode is on and question answered) -->
-            <div id="exam-instant-exp-box" class="hidden mt-6 p-4 sm:p-5 rounded-2xl border transition-all">
-              <!-- Dynamically populated explanation -->
             </div>
 
             <!-- Exam Navigation Buttons -->
@@ -244,14 +235,6 @@
               </div>
             </div>
 
-            <!-- Live instant explanation toggle in quiz -->
-            <div class="flex items-center justify-between px-1 py-1">
-              <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">Hiện giải thích tức thì:</span>
-              <button onclick="toggleExamInstantExpLive()" id="btn-toggle-instant-exp-live" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
-                Đang bật 💡
-              </button>
-            </div>
-
             <!-- Question Palette -->
             <div class="space-y-2">
               <div class="flex items-center justify-between text-xs font-semibold text-slate-600 dark:text-slate-400">
@@ -270,7 +253,7 @@
 
             <!-- Submit Button -->
             <button onclick="confirmSubmitExam()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-2xl shadow-lg shadow-emerald-600/25 transition-all text-sm flex items-center justify-center gap-2">
-              ✓ Nộp Bài Thi
+              ✓ Nộp Bài Thi & Xem Đáp Án
             </button>
 
           </div>
@@ -278,7 +261,7 @@
 
       </div>
 
-      <!-- Exam Result Screen (After Submission) -->
+      <!-- Exam Result Screen (After Submission - FULL ANSWERS & EXPLANATIONS) -->
       <div id="exam-result-card" class="hidden space-y-6">
         
         <!-- Result Summary Banner -->
@@ -326,10 +309,13 @@
           </div>
         </div>
 
-        <!-- Filter and Detailed Answers Review -->
+        <!-- Filter and Detailed Answers Review (ALWAYS REVEALS CORRECT ANSWERS + EXPLANATIONS) -->
         <div class="space-y-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Chi Tiết Từng Câu Hỏi & Giải Thích</h3>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Chi Tiết Từng Câu Hỏi & Đáp Án Chuẩn</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Đối chiếu lựa chọn của bạn với đáp án đúng và đọc giải thích bản chất kiến thức.</p>
+            </div>
             <div class="flex items-center gap-2">
               <button onclick="filterResultView('all')" id="res-filter-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white">Tất cả</button>
               <button onclick="filterResultView('wrong')" id="res-filter-wrong" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Chỉ câu sai</button>
@@ -537,7 +523,7 @@
 
   <!-- Footer -->
   <footer class="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
-    <p>PRM393 — Lập trình di động | Dữ liệu trích xuất từ 5 bộ đề FTES (FrosTES) | 116 câu hỏi kèm giải thích</p>
+    <p>PRM393 — Lập trình di động | Dữ liệu trích xuất từ 5 bộ đề FTES (FrosTES) | 116 câu hỏi chuẩn hóa</p>
   </footer>
 
   <!-- Confirmation Modal for Exam Submission -->
@@ -2095,8 +2081,7 @@
         timerInterval: null,
         startTime: null,
         endTime: null,
-        submitted: false,
-        showInstantExplanation: true
+        submitted: false
       },
       // Flashcard state
       flashcard: {
@@ -2195,6 +2180,7 @@
 
     // ========================================================
     // EXAM LOGIC (MOCK TEST 50 QUESTIONS)
+    // TUYỆT ĐỐI KHÔNG HIỆN ĐÁP ÁN TRONG KHI THI. THI XONG MỚI COI ĐÁP ÁN.
     // ========================================================
 
     function startExam(count) {
@@ -2206,7 +2192,6 @@
       state.exam.flags = {};
       state.exam.timerSeconds = state.exam.totalCount * 60; // 1 min per question
       state.exam.startTime = new Date();
-      state.exam.showInstantExplanation = document.getElementById('exam-instant-exp-toggle').checked;
 
       // Randomly sample and shuffle questions from bank
       const shuffled = [...QUESTIONS_DATA].sort(() => 0.5 - Math.random());
@@ -2217,9 +2202,6 @@
       document.getElementById('exam-result-card').classList.add('hidden');
       document.getElementById('exam-active-card').classList.remove('hidden');
 
-      // Update instant explanation live toggle button text
-      updateInstantExpLiveButton();
-
       // Build Question Palette
       buildExamPalette();
 
@@ -2228,23 +2210,6 @@
 
       // Render first question
       renderExamCurrentQuestion();
-    }
-
-    function toggleExamInstantExpLive() {
-      state.exam.showInstantExplanation = !state.exam.showInstantExplanation;
-      updateInstantExpLiveButton();
-      renderExamCurrentQuestion();
-    }
-
-    function updateInstantExpLiveButton() {
-      const btn = document.getElementById('btn-toggle-instant-exp-live');
-      if (state.exam.showInstantExplanation) {
-        btn.innerText = 'Đang bật 💡';
-        btn.className = 'text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline';
-      } else {
-        btn.innerText = 'Đang tắt 🔕';
-        btn.className = 'text-xs font-bold text-slate-400 hover:underline';
-      }
     }
 
     function startExamTimer() {
@@ -2257,7 +2222,7 @@
 
         if (state.exam.timerSeconds <= 0) {
           clearInterval(state.exam.timerInterval);
-          alert('Hết giờ làm bài! Hệ thống sẽ tự động nộp bài thi của bạn.');
+          alert('Hết giờ làm bài! Hệ thống tự động nộp bài và mở khóa đáp án chi tiết.');
           submitExamFinal();
         }
       }, 1000);
@@ -2337,82 +2302,37 @@
         ? 'flex items-center gap-1.5 text-xs font-semibold text-amber-600 bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 px-3 py-1 rounded-lg transition-colors'
         : 'flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-amber-500 dark:hover:text-amber-400 px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-800 transition-colors';
 
-      // Render options
+      // Render options - HOÀN TOÀN KHÔNG HIỆN ĐÁP ÁN TRONG KHI THI
       const container = document.getElementById('exam-options-container');
       container.innerHTML = '';
 
       const selected = state.exam.answers[idx];
-      const hasAnswered = (selected !== undefined);
-      const isInstantMode = state.exam.showInstantExplanation;
 
       q.options.forEach((optStr) => {
         const letter = optStr.charAt(0); // A, B, C, D
         const isSelected = (selected === letter);
-        const isCorrectLetter = (q.answer === letter);
 
         const btn = document.createElement('button');
         btn.onclick = () => selectExamOption(letter);
 
-        let optClass = 'w-full p-4 rounded-2xl border text-left flex items-start gap-3.5 transition-all ';
-
-        if (hasAnswered && isInstantMode) {
-          if (isCorrectLetter) {
-            optClass += 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-950 dark:text-emerald-100 font-bold ring-2 ring-emerald-500 shadow-sm ';
-          } else if (isSelected && !isCorrectLetter) {
-            optClass += 'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-950 dark:text-rose-100 font-semibold ring-2 ring-rose-500 shadow-sm ';
-          } else {
-            optClass += 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 opacity-60 ';
-          }
-        } else {
-          if (isSelected) {
-            optClass += 'bg-indigo-50/80 dark:bg-indigo-950/50 border-indigo-500 ring-2 ring-indigo-500 text-indigo-950 dark:text-indigo-100 font-semibold shadow-sm ';
-          } else {
-            optClass += 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200 ';
-          }
-        }
+        const optClass = 'w-full p-4 rounded-2xl border text-left flex items-start gap-3.5 transition-all ' + 
+          (isSelected 
+            ? 'bg-indigo-50/80 dark:bg-indigo-950/50 border-indigo-500 ring-2 ring-indigo-500 text-indigo-950 dark:text-indigo-100 font-semibold shadow-sm' 
+            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200');
 
         btn.className = optClass;
 
-        let badgeClass = 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
-        if (hasAnswered && isInstantMode) {
-          if (isCorrectLetter) badgeClass = 'bg-emerald-600 text-white';
-          else if (isSelected) badgeClass = 'bg-rose-600 text-white';
-        } else if (isSelected) {
-          badgeClass = 'bg-indigo-600 text-white';
-        }
+        const badgeClass = isSelected 
+          ? 'bg-indigo-600 text-white' 
+          : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
 
         btn.innerHTML = `
           <span class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-extrabold flex-shrink-0 transition-colors ${badgeClass}">${letter}</span>
           <span class="text-sm pt-0.5 leading-snug flex-1">${optStr.replace(/^[A-D]\.\s*/, '')}</span>
-          ${hasAnswered && isInstantMode && isCorrectLetter ? '<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">✓ Đúng</span>' : ''}
-          ${hasAnswered && isInstantMode && isSelected && !isCorrectLetter ? '<span class="text-xs font-bold text-rose-600 dark:text-rose-400">✗ Bạn chọn</span>' : ''}
+          ${isSelected ? '<span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">Đã chọn</span>' : ''}
         `;
         container.appendChild(btn);
       });
-
-      // Instant Explanation Box
-      const expBox = document.getElementById('exam-instant-exp-box');
-      if (hasAnswered && isInstantMode) {
-        expBox.classList.remove('hidden');
-        const isRight = (selected === q.answer);
-        expBox.className = `mt-6 p-5 rounded-2xl border transition-all ${
-          isRight 
-            ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' 
-            : 'bg-rose-50/80 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800 text-rose-900 dark:text-rose-200'
-        }`;
-        expBox.innerHTML = `
-          <div class="flex items-center gap-2 font-extrabold text-sm mb-2">
-            <span>${isRight ? '✅ Bạn đã chọn đúng!' : '❌ Bạn đã chọn chưa chính xác.'}</span>
-            <span>Đáp án đúng: <strong>${q.answer}</strong></span>
-          </div>
-          <div class="pt-2 border-t border-slate-200/60 dark:border-slate-700/60 text-xs leading-relaxed text-slate-800 dark:text-slate-200">
-            <strong class="text-indigo-600 dark:text-indigo-400 font-bold block mb-1">💡 Giải thích chi tiết:</strong>
-            ${q.explanation || 'Đáp án chính xác được xác nhận theo giáo trình PRM393.'}
-          </div>
-        `;
-      } else {
-        expBox.classList.add('hidden');
-      }
 
       // Update Nav buttons
       document.getElementById('btn-exam-prev').disabled = (idx === 0);
@@ -2471,8 +2391,8 @@
       const answeredCount = Object.keys(state.exam.answers).length;
       const unanswered = state.exam.totalCount - answeredCount;
       const warnText = unanswered > 0 
-        ? `Bạn còn <strong>${unanswered}</strong> câu chưa chọn đáp án. Bạn có muốn nộp bài luôn không?`
-        : 'Bạn đã hoàn thành tất cả các câu hỏi! Bạn có chắc chắn muốn nộp bài?';
+        ? `Bạn còn <strong>${unanswered}</strong> câu chưa chọn đáp án. Bạn có muốn nộp bài luôn và xem đáp án không?`
+        : 'Bạn đã trả lời đầy đủ 50 câu! Bạn có chắc chắn muốn nộp bài và xem đáp án?';
       document.getElementById('confirm-unanswered-warning').innerHTML = warnText;
       document.getElementById('confirm-modal').classList.remove('hidden');
     }
@@ -2524,7 +2444,7 @@
         badge.innerText = '⚠️ CHƯA ĐẠT - CẦN ÔN LẠI (FAILED)';
       }
 
-      // Render review list
+      // Render review list - BÂY GIỜ MỚI MỞ KHÓA ĐÁP ÁN VÀ GIẢI THÍCH
       renderExamReviewList('all');
 
       // Toggle views
@@ -2568,7 +2488,7 @@
           optionsHtml += `
             <div class="${optStyle}">
               <span class="font-bold">${letter}.</span>
-              <span>${opt.replace(/^[A-D]\.\s*/, '')}</span>
+              <span class="flex-1">${opt.replace(/^[A-D]\.\s*/, '')}</span>
               ${isRightChoice ? '<span class="ml-auto text-emerald-600 dark:text-emerald-400 font-bold">✓ Đáp án đúng</span>' : ''}
               ${isUserChoice && !isRightChoice ? '<span class="ml-auto text-rose-600 dark:text-rose-400 font-bold">✗ Bạn đã chọn</span>' : ''}
             </div>
